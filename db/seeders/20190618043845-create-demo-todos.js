@@ -9,7 +9,7 @@ module.exports = {
     //     completed: false
     //   };
     // });
-    let demoTodos = [];
+    const demoTodos = [];
     for(let i = 0; i < 5; i++){
       const todo = {
         title: `demo title ${i}`,
