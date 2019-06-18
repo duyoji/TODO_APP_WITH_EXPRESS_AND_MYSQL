@@ -1,0 +1,19 @@
+{
+  "name": "todo_app_with_express_and_mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atlansien/TODO_APP_WITH_EXPRESS_AND_MYSQL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atlansien/TODO_APP_WITH_EXPRESS_AND_MYSQL/issues"
+  },
+  "homepage": "https://github.com/atlansien/TODO_APP_WITH_EXPRESS_AND_MYSQL#readme"
+}
