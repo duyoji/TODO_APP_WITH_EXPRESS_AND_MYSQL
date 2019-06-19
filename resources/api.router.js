@@ -5,7 +5,10 @@ const contoroller = require("./api.controller");
 router
   .route("/")
   .get(contoroller.getTodos)
-  .post(contoroller.postTodo)
+  .post(contoroller.postTodo);
+
+router
+  .route("/:id")
   .put(contoroller.putTodo)
   .delete(contoroller.deleteTodo);
 
