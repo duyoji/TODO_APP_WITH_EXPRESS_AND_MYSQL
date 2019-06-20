@@ -7,8 +7,6 @@ const index = require("../../../../db/models/index");
 
 const DummyTodo = require("../../../../helper/createHelper");
 const requestHelper = require("../../../../helper/requestHelper").request;
-const replaceHelper = require("../../../../helper/replaceHelper")
-  .backSlashReplase;
 
 const getTodos = async () => {
   const response = await requestHelper({
@@ -48,17 +46,20 @@ describe("test 「POST /api/todos」", () => {
   it("titleを送らなかった場合、エラーが返る", async () => {
     const data = { body: "bad data" };
 
-    await createTodo(400, data);
+    const response = await createTodo(400, data);
+
+    assert.strictEqual(
+      response.body.message,
+      "Field 'title' doesn't have a default value"
+    );
   });
   it("bodyを送らなかった場合、エラーが返る", async () => {
     const data = { title: "bad data" };
 
     const response = await createTodo(400, data);
 
-    const errorMessage = replaceHelper(response.body.message);
-
     assert.strictEqual(
-      errorMessage,
+      response.body.message,
       "Field 'body' doesn't have a default value"
     );
   });
@@ -71,10 +72,8 @@ describe("test 「POST /api/todos」", () => {
 
     const response = await createTodo(400, data);
 
-    const errorMessage = replaceHelper(response.body.message);
-
     assert.strictEqual(
-      errorMessage,
+      response.body.message,
       "Incorrect integer value: '" +
         data.completed +
         "' for column `database_test`.`todos`.`completed` at row 1"
