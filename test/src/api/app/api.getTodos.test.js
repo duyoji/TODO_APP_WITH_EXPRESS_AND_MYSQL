@@ -9,7 +9,6 @@ describe("test 「GET /api/todos」", () => {
       endPoint: "/api/todos",
       statusCode: 200,
     });
-
     // responseはjsonなので分解する
     const todos = response.body;
 
@@ -20,8 +19,10 @@ describe("test 「GET /api/todos」", () => {
       assert.strictEqual(typeof todo.id, "number");
       assert.strictEqual(typeof todo.title, "string");
       assert.strictEqual(typeof todo.body, "string");
+      assert.strictEqual(typeof todo.completed, "boolean");
       assert.strictEqual(typeof todo.createdAt, "string");
       assert.strictEqual(typeof todo.updatedAt, "string");
     });
+    q;
   });
 });
