@@ -5,6 +5,8 @@ const index = require("../../../../db/models/index");
 
 const DummyTodo = require("../../../../helper/createHelper");
 const requestHelper = require("../../../../helper/requestHelper").request;
+const replaceHelper = require("../../../../helper/replaceHelper")
+  .backSlashReplase;
 
 const getTodos = async () => {
   const response = await requestHelper({
@@ -60,7 +62,7 @@ describe("test 「POST /api/todos」", () => {
 
     const response = await createTodo(400, data);
 
-    const errorMessage = response.body.message.replace(/\\/g);
+    const errorMessage = replaceHelper(response.body.message);
 
     assert.strictEqual(
       errorMessage,
