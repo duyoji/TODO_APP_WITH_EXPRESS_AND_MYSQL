@@ -51,6 +51,24 @@ describe("test 「POST /api/todos」", () => {
 
     await createTodo(400, data);
   });
+  it("completedにboolean、またnumber以外を送った場合、エラーが返る", async () => {
+    const data = {
+      title: "bad data",
+      body: "bad data",
+      completed: "bad completed",
+    };
+
+    const response = await createTodo(400, data);
+
+    const errorMessage = response.body.message.replace(/\\/g);
+
+    assert.strictEqual(
+      errorMessage,
+      "Incorrect integer value: '" +
+        data.completed +
+        "' for column `database_test`.`todos`.`completed` at row 1"
+    );
+  });
   it("適切にデータを送った場合、新規作成されたTodo１件が返ってくる。また、作成されたTodo一件はテーブルに格納されている", async () => {
     const oldTodos = await getTodos();
 
