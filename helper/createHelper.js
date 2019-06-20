@@ -1,9 +1,9 @@
-class CreateTodo {
-  constructor({ username, body }) {
-    this.username = username;
+class Todo {
+  constructor({ title, body }) {
+    this.title = title;
     this.body = body;
     this.completed = false;
   }
 }
 
-module.exports = CreateTodo;
+module.exports = Todo;
