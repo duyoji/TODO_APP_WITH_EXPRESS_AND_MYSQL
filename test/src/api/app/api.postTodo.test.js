@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 const assert = require("power-assert");
+// eslint-disable-next-line no-unused-vars
+const chalk = require("chalk");
 
 const index = require("../../../../db/models/index");
 
