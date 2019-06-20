@@ -59,7 +59,7 @@ describe("test 「POST /api/todos」", () => {
       body: "test body",
     };
 
-    const response = createTodo(200, data);
+    const response = await createTodo(200, data);
     const todo = response.body;
 
     // 新規作成されたTodo１件が返ってくる
@@ -67,8 +67,8 @@ describe("test 「POST /api/todos」", () => {
       id: todo.id,
       title: data.title,
       body: data.body,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
+      createdAt: todo.createdAt,
+      updatedAt: todo.updatedAt,
     });
 
     const currentTodos = await getTodos();
