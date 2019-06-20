@@ -2,9 +2,13 @@ const index = require("../db/models/index");
 
 module.exports = {
   getTodos: async (req, res) => {
-    const todos = await index.todos.findAll({});
+    try {
+      const todos = await index.Todo.findAll({});
 
-    res.status(200).json(todos);
+      res.status(200).json(todos);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
   postTodo: (req, res) => {
     res.status(200).send("It's POST request method");

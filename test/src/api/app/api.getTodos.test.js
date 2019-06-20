@@ -9,7 +9,7 @@ const requestHelper = require("../../../../helper/requestHelper").request;
 describe("test 「GET /api/todos」", () => {
   before(async () => {
     for (let i = 0; i < 5; i++) {
-      await index.todos.create(
+      await index.Todo.create(
         new DummyTodo({
           title: `title ${i}`,
           body: `body ${i}`,
@@ -18,7 +18,7 @@ describe("test 「GET /api/todos」", () => {
     }
   });
   after(async () => {
-    await index.todos.truncate();
+    await index.Todo.truncate();
   });
   it("getリクエストで返されたデータは適切である", async () => {
     const response = await requestHelper({
