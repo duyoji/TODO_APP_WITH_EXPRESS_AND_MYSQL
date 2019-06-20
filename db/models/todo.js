@@ -1,7 +1,7 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
   const Todo = sequelize.define(
-    "todos",
+    "Todo",
     {
       title: DataTypes.STRING,
       body: DataTypes.TEXT,
