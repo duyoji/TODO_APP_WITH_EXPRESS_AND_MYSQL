@@ -71,6 +71,21 @@ describe("test 「POST /api/todos」", () => {
         "' for column `database_test`.`todos`.`completed` at row 1"
     );
   });
+  it("completedにboolean型に変換できない数字を送った場合、エラーが返る", async () => {
+    const invalidCompleted = 3;
+    const data = {
+      title: "bad data",
+      body: "bad data",
+      completed: invalidCompleted,
+    };
+
+    const response = await createTodo(400, data);
+
+    assert.strictEqual(
+      response.body.message,
+      "completedにはboolean型を入力してください"
+    );
+  });
   it("適切にデータを送った場合、新規作成されたTodo１件が返ってくる。また、作成されたTodo一件はテーブルに格納されている", async () => {
     const oldTodos = await getTodos();
 
