@@ -51,7 +51,14 @@ describe("test 「POST /api/todos」", () => {
   it("bodyを送らなかった場合、エラーが返る", async () => {
     const data = { title: "bad data" };
 
-    await createTodo(400, data);
+    const response = await createTodo(400, data);
+
+    const errorMessage = replaceHelper(response.body.message);
+
+    assert.strictEqual(
+      errorMessage,
+      "Field 'body' doesn't have a default value"
+    );
   });
   it("completedにboolean、またnumber以外を送った場合、エラーが返る", async () => {
     const data = {
