@@ -13,9 +13,16 @@ module.exports = {
   postTodo: async (req, res) => {
     const t = await index.sequelize.transaction();
     try {
-      if (typeof req.body.completed !== "boolean") {
-        throw new Error("completedにはboolean型を入力してください");
+      if (!req.body.title) {
+        throw new Error("titleを送信してください");
       }
+      if (!req.body.body) {
+        throw new Error("bodyを送信してください");
+      }
+      if (typeof req.body.completed !== "boolean") {
+        throw new Error("completedにはfalse/trueのみを入力してください");
+      }
+
       const todo = await index.Todo.create(
         {
           title: req.body.title,
