@@ -1,15 +1,5 @@
 const index = require("../db/models/index");
 
-const toBoolean = data => {
-  if (data.toLowerCase() === "true") {
-    return true;
-  } else if (data.toLowerCase() === "false") {
-    return false;
-  } else {
-    return undefined;
-  }
-};
-
 module.exports = {
   getTodos: async (req, res) => {
     try {
@@ -23,6 +13,9 @@ module.exports = {
   postTodo: async (req, res) => {
     const t = await index.sequelize.transaction();
     try {
+      if (typeof req.body.completed !== "boolean") {
+        throw new Error("completedにはboolean型を入力してください");
+      }
       const todo = await index.Todo.create(
         {
           title: req.body.title,
@@ -31,12 +24,7 @@ module.exports = {
         },
         { t }
       );
-      if (JSON.stringify(todo.completed)) {
-        const completed = toBoolean(JSON.stringify(todo.completed));
-        if (typeof completed !== "boolean") {
-          throw new Error("completedにはboolean型を入力してください");
-        }
-      }
+
       await t.commit();
       res.status(200).json(todo);
     } catch (err) {
