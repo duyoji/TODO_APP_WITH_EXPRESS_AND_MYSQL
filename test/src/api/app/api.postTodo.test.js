@@ -48,51 +48,30 @@ describe("test 「POST /api/todos」", () => {
 
     const response = await createTodo(400, data);
 
-    assert.strictEqual(
-      response.body.message,
-      "Field 'title' doesn't have a default value"
-    );
+    assert.strictEqual(response.body.message, "titleを送信してください");
   });
   it("bodyを送らなかった場合、エラーが返る", async () => {
     const data = { title: "bad data" };
 
     const response = await createTodo(400, data);
 
-    assert.strictEqual(
-      response.body.message,
-      "Field 'body' doesn't have a default value"
-    );
+    assert.strictEqual(response.body.message, "bodyを送信してください");
   });
-  it("completedにboolean、またnumber以外を送った場合、エラーが返る", async () => {
-    const data = {
-      title: "bad data",
-      body: "bad data",
-      completed: "bad completed",
-    };
+  it("completedにboolean型以外を送った場合、エラーが返る", async () => {
+    const invalidCompletedList = [-1, 2, "0", null, [], {}];
 
-    const response = await createTodo(400, data);
-
-    assert.strictEqual(
-      response.body.message,
-      "Incorrect integer value: '" +
-        data.completed +
-        "' for column `database_test`.`todos`.`completed` at row 1"
-    );
-  });
-  it("completedにboolean型に変換できない数字を送った場合、エラーが返る", async () => {
-    const invalidCompleted = 3;
-    const data = {
-      title: "bad data",
-      body: "bad data",
-      completed: invalidCompleted,
-    };
-
-    const response = await createTodo(400, data);
-
-    assert.strictEqual(
-      response.body.message,
-      "completedにはboolean型を入力してください"
-    );
+    for (let i = 0; i < invalidCompletedList.length; i++) {
+      const data = {
+        title: "title",
+        body: "body",
+        completed: invalidCompletedList[i],
+      };
+      const response = await createTodo(400, data);
+      assert.strictEqual(
+        response.body.message,
+        "completedにはboolean型のみを入力してください"
+      );
+    }
   });
   it("適切にデータを送った場合、新規作成されたTodo１件が返ってくる。また、作成されたTodo一件はテーブルに格納されている", async () => {
     const oldTodos = await getTodos();

@@ -19,8 +19,11 @@ module.exports = {
       if (!req.body.body) {
         throw new Error("bodyを送信してください");
       }
-      if (typeof req.body.completed !== "boolean") {
-        throw new Error("completedにはfalse/trueのみを入力してください");
+      if (
+        typeof req.body.completed !== "boolean" &&
+        req.body.completed !== undefined
+      ) {
+        throw new Error("completedにはboolean型のみを入力してください");
       }
 
       const todo = await index.Todo.create(
