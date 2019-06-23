@@ -50,6 +50,9 @@ module.exports = {
           "idに適切でない値が入っています、1以上の数字を入れてください"
         );
       }
+      if (typeof req.body.completed !== "boolean") {
+        throw new Error("completedにはboolean型のみを入力してください");
+      }
       const todo = index.Todo.findOne({
         where: parseId,
       });
