@@ -50,6 +50,15 @@ module.exports = {
           "idに適切でない値が入っています、1以上の数字を入れてください"
         );
       }
+      const todo = index.Todo.findOne({
+        where: parseId,
+      });
+      if (!todo) {
+        throw new Error(
+          `検索結果: ID:${parseId}に該当するTodoは見つかりませんでした`
+        );
+      }
+
       res.status(200).json();
     } catch (err) {
       res.status(400).json({ message: err.message });
