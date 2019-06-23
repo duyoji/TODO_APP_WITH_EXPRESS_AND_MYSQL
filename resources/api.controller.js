@@ -43,7 +43,11 @@ module.exports = {
     }
   },
   putTodo: (req, res) => {
-    res.status(200).send(`It's PUT request method ID: ${req.params.id}`);
+    try {
+      res.status(200).json();
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
   deleteTodo: (req, res) => {
     res.status(200).send(`It's DELETE request method ID: ${req.params.id}`);
