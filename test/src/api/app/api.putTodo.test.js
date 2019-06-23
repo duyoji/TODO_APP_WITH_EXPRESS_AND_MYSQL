@@ -80,4 +80,22 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       `検索結果: ID${invalidId}に該当するTodoは見つかりませんでした`
     );
   });
+  it("completedにboolean型以外を送った場合、エラーが返る", async () => {
+    const invalidCompletedList = [-1, 2, "0", null, [], {}];
+    const id = 3;
+
+    for (let i = 0; i < 5; i++) {
+      const data = {
+        title: "title",
+        body: "body",
+        completed: invalidCompletedList[i],
+      };
+
+      const response = await updateTodo(400, id, data);
+      assert.strictEqual(
+        response.body.message,
+        "completedにはboolean型のみを入力してください"
+      );
+    }
+  });
 });
