@@ -103,7 +103,11 @@ describe("TEST 「PUT /api/todos/:id」", () => {
   it("適切にデータを送った場合、idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる、また配列内にあったidと紐つくコメントは変更されたコメントに上書きされる", async () => {
     const validId = 3;
 
-    const oldTodos = await getTodos();
+    const oldTodo = await index.Todo.findOne({
+      where: {
+        id: validId,
+      },
+    });
 
     datas = [
       { title: "title" },
@@ -186,9 +190,13 @@ describe("TEST 「PUT /api/todos/:id」", () => {
 
       assert.strictEqual(todo.updateTodo > todo.createdAt, true);
 
-      const currentTodos = await getTodos();
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
 
-      assert.notStrictEqual(oldTodos[2], currentTodos[2]);
+      assert.notStrictEqual(oldTodo, currentTodo);
     }
   });
 });
