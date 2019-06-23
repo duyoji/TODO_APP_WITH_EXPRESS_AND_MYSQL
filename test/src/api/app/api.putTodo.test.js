@@ -44,28 +44,31 @@ describe("TEST 「PUT /api/todos/:id」", () => {
   });
 
   it("idの引数に不正な値が入っていた場合、エラーが返る", async () => {
-    const invalidIdList = [
-      { id: 0 },
-      { id: -1 },
-      { id: "0" },
-      { id: true },
-      { id: undefined },
-      { id: null },
-      { id: [] },
-      { id: {} },
-    ];
-
+    const invalidIdList = [0, -1, "0", undefined, null, [], {}];
     const data = {
       title: "title",
       body: "body",
     };
 
     invalidIdList.forEach(async id => {
-      const response = updateTodo(400, data, id);
+      const response = await updateTodo(400, id, data);
       assert.strictEqual(
         response.body.message,
         "idに適切でない値が入っています、1以上の数字を入れてください"
       );
     });
+  });
+  it("idの引数と合致するTodoがない場合、エラーが返る", async () => {
+    const invalidId = 99999999999999999;
+    const data = {
+      title: "title",
+      body: "body",
+    };
+
+    const response = await updateTodo(400, id, data);
+    assert.strictEqual(
+      response.body.message,
+      `検索結果: ID${invalidId}に該当するTodoは見つかりませんでした`
+    );
   });
 });
