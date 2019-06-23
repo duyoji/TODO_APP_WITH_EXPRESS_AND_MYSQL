@@ -50,14 +50,23 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       body: "body",
     };
 
-    invalidIdList.forEach(async id => {
-      const response = await updateTodo(400, id, data);
+    for (let i = 0; i < 5; i++) {
+      const response = await updateTodo(400, invalidIdList[i], data);
       assert.strictEqual(
         response.body.message,
         "idに適切でない値が入っています、1以上の数字を入れてください"
       );
-    });
+    }
+
+    // invalidIdList.forEach(async id => {
+    //   const response = await updateTodo(400, id, data);
+    //   assert.strictEqual(
+    //     response.body.message,
+    //     "idに適切でない値が入っています、1以上の数字を入れてください"
+    //   );
+    // });
   });
+
   it("idの引数と合致するTodoがない場合、エラーが返る", async () => {
     const invalidId = 99999999999999999;
     const data = {
