@@ -44,6 +44,12 @@ module.exports = {
   },
   putTodo: (req, res) => {
     try {
+      const parseId = parseInt(req.params.id, 10);
+      if (typeof parseId !== "number" || parseId < 1) {
+        throw new Error(
+          "idに適切でない値が入っています、1以上の数字を入れてください"
+        );
+      }
       res.status(200).json();
     } catch (err) {
       res.status(400).json({ message: err.message });
