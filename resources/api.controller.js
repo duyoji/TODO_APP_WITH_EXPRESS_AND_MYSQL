@@ -53,10 +53,10 @@ module.exports = {
       if (typeof req.body.completed !== "boolean") {
         throw new Error("completedにはboolean型のみを入力してください");
       }
-      const todo = index.Todo.findOne({
+      const findedTodo = index.Todo.findOne({
         where: parseId,
       });
-      if (!todo) {
+      if (!findedTodo) {
         throw new Error(
           `検索結果: ID:${parseId}に該当するTodoは見つかりませんでした`
         );
