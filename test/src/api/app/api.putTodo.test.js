@@ -103,7 +103,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
     }
   });
 
-  it("適切にデータを送った場合、idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる、また配列内にあったidと紐つくコメントは変更されたコメントに上書きされる", async () => {
+  it("適切にデータを送った場合、idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる、また配列内にあったidと紐つくTodoは変更されたTodoに上書きされる", async () => {
     const validId = 3;
 
     const oldTodo = await index.Todo.findOne({
@@ -126,6 +126,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       const response = await updateTodo(200, validId, datas[i]);
       const todo = response.body;
 
+      // idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる
       if (datas[i].title && datas[i].body && datas[i].completed) {
         assert.deepStrictEqual(todo, {
           id: validId,
@@ -191,6 +192,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         });
       }
 
+      // 変更されたTodo１件のupdatedAtは更新されている
       assert.strictEqual(todo.updatedAt > todo.createdAt, true);
 
       const currentTodo = await index.Todo.findOne({
@@ -199,6 +201,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
     }
   });
