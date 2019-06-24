@@ -191,7 +191,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         });
       }
 
-      assert.strictEqual(todo.updateAt > todo.createdAt, true);
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
 
       const currentTodo = await index.Todo.findOne({
         where: {
