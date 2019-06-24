@@ -58,4 +58,14 @@ describe("TEST 「DELETE /api/todos/:id」", () => {
       );
     });
   });
+
+  it("idの引数と合致するTodoがない場合、エラーが返る", async () => {
+    const invalidId = 99999999999;
+    const response = await deleteTodo(400, invalidId);
+
+    assert.strictEqual(
+      response.body.message,
+      `検索結果: ID:${invalidId}に該当するTodoは見つかりませんでした`
+    );
+  });
 });
