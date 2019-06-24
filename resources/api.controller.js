@@ -1,9 +1,5 @@
 const index = require("../db/models/index");
 
-// chalkはコードの記述が終了次第消す
-// eslint-disable-next-line no-unused-vars
-const chalk = require("chalk");
-
 module.exports = {
   getTodos: async (req, res) => {
     try {
