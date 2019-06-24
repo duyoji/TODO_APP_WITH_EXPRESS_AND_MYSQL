@@ -35,20 +35,20 @@ describe("TEST 「PUT /api/todos/:id」", () => {
   });
 
   it("idの引数に不正な値が入っていた場合、エラーが返る", async () => {
-    const invalidIdList = [0, -1, "0", undefined, null, {}];
+    const invalidIdList = [0, -1, "0", undefined, null, {}, []];
     const data = {
       title: "title",
       body: "body",
     };
 
-    for (let i = 0; i < invalidIdList.length; i++) {
-      const response = await updateTodo(400, invalidIdList[i], data);
+    invalidIdList.forEach(async id => {
+      const response = await updateTodo(400, id, data);
 
       assert.strictEqual(
         response.body.message,
         "idに適切でない値が入っています、1以上の数字を入れてください"
       );
-    }
+    });
   });
 
   it("idの引数と合致するTodoがない場合、エラーが返る", async () => {
@@ -69,11 +69,11 @@ describe("TEST 「PUT /api/todos/:id」", () => {
     const invalidCompletedList = [-1, 2, "0", null, [], {}];
     const id = 3;
 
-    for (let i = 0; i < invalidCompletedList.length; i++) {
+    invalidCompletedList.forEach(async completed => {
       const data = {
         title: "title",
         body: "body",
-        completed: invalidCompletedList[i],
+        completed: completed,
       };
 
       const response = await updateTodo(400, id, data);
@@ -81,14 +81,14 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         response.body.message,
         "completedにはboolean型のみを入力してください"
       );
-    }
+    });
   });
 
   it("titleを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
       const validId = 3;
 
-      const oldTodo = await index.Todo.findOne({
+      const oldTodo = index.Todo.findOne({
         where: {
           id: validId,
         },
@@ -123,7 +123,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
   it("bodyを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -161,7 +161,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
       done();
-    }, 100);
+    }, 10);
   });
   it("completedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -200,7 +200,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
   it("titleとbodyを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -239,7 +239,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
   it("titleとcompletedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -278,7 +278,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
   it("bodyとcompletedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -317,7 +317,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
   it("title、body、completedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
     setTimeout(async () => {
@@ -359,6 +359,6 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
-    }, 100);
+    }, 10);
   });
 });

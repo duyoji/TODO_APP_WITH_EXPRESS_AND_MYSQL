@@ -1,3 +1,2 @@
 --recursive
 --exit
---timeout [3000];
