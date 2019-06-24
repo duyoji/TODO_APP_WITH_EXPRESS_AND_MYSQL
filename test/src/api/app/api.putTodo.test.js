@@ -12,7 +12,7 @@ const chalk = require("chalk");
 const getTodos = async () => {
   const response = await requestHelper({
     method: "get",
-    endPoint: "api/todos",
+    endPoint: "/api/todos",
     statusCode: 200,
   });
   return response;
@@ -21,7 +21,7 @@ const getTodos = async () => {
 const updateTodo = async (code, id, data) => {
   const response = await requestHelper({
     method: "put",
-    endPoint: `api/todos/${id}`,
+    endPoint: `/api/todos/${id}`,
     statusCode: code,
   }).send(data);
   return response;
@@ -77,10 +77,10 @@ describe("TEST 「PUT /api/todos/:id」", () => {
       body: "body",
     };
 
-    const response = await updateTodo(400, id, data);
+    const response = await updateTodo(400, invalidId, data);
     assert.strictEqual(
       response.body.message,
-      `検索結果: ID${invalidId}に該当するTodoは見つかりませんでした`
+      `検索結果: ID:${invalidId}に該当するTodoは見つかりませんでした`
     );
   });
 
@@ -113,13 +113,13 @@ describe("TEST 「PUT /api/todos/:id」", () => {
     });
 
     datas = [
-      { title: "title" },
-      { body: "body" },
+      { title: "update title" },
+      { body: "update body" },
       { completed: true },
-      { title: "title", body: "body" },
-      { title: "title", completed: true },
-      { body: "body", completed: true },
-      { title: "title", body: "body", completed: true },
+      { title: "update title", body: "update body" },
+      { title: "update title", completed: true },
+      { body: "update body", completed: true },
+      { title: "update title", body: "update body", completed: true },
     ];
 
     for (let i = 0; i < 5; i++) {
@@ -184,14 +184,14 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         assert.deepStrictEqual(todo, {
           id: validId,
           title: todo.title,
-          body: datas[i].body,
-          completed: todo.completed,
+          body: todo.body,
+          completed: datas[i].completed,
           createdAt: todo.createdAt,
           updatedAt: todo.updatedAt,
         });
       }
 
-      assert.strictEqual(todo.updateTodo > todo.createdAt, true);
+      assert.strictEqual(todo.updateAt > todo.createdAt, true);
 
       const currentTodo = await index.Todo.findOne({
         where: {

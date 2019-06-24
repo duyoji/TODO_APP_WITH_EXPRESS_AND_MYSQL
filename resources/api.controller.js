@@ -61,8 +61,8 @@ module.exports = {
       ) {
         throw new Error("completedにはboolean型のみを入力してください");
       }
-      const findedTodo = index.Todo.findOne({
-        where: parseId,
+      const findedTodo = await index.Todo.findOne({
+        where: { id: parseId },
       });
       if (!findedTodo) {
         throw new Error(
@@ -92,11 +92,13 @@ module.exports = {
         completed = req.body.completed;
       }
 
-      const todo = await index.Todo.update(
+      await index.Todo.update(
         { title: title, body: body, completed: completed },
         { where: { id: parseId } },
         { t }
       );
+
+      const todo = await index.Todo.findOne({ where: { id: parseId } }, { t });
 
       await t.commit();
       res.status(200).json(todo);
