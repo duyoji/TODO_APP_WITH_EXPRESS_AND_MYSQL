@@ -7,8 +7,6 @@ const index = require("../../../../db/models/index");
 const DummyTodo = require("../../../../helper/createHelper");
 const requestHelper = require("../../../../helper/requestHelper").request;
 
-const chalk = require("chalk");
-
 const updateTodo = async (code, id, data) => {
   const response = await requestHelper({
     method: "put",
