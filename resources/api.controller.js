@@ -42,7 +42,8 @@ module.exports = {
       res.status(400).json({ message: err.message });
     }
   },
-  putTodo: (req, res) => {
+  putTodo: async (req, res) => {
+    const t = await index.sequelize.transaction();
     try {
       const parseId = parseInt(req.params.id, 10);
       if (typeof parseId !== "number" || parseId < 1) {
@@ -50,7 +51,10 @@ module.exports = {
           "idに適切でない値が入っています、1以上の数字を入れてください"
         );
       }
-      if (typeof req.body.completed !== "boolean") {
+      if (
+        typeof req.body.completed !== "boolean" &&
+        req.body.completed !== undefined
+      ) {
         throw new Error("completedにはboolean型のみを入力してください");
       }
       const findedTodo = index.Todo.findOne({
@@ -62,8 +66,38 @@ module.exports = {
         );
       }
 
-      res.status(200).json();
+      let title;
+      let body;
+      let completed;
+
+      if (!req.body.title) {
+        title = findedTodo.title;
+      } else {
+        title = req.body.title;
+      }
+
+      if (!req.body.body) {
+        body = findedTodo.body;
+      } else {
+        body = req.body.body;
+      }
+
+      if (!req.body.completed) {
+        completed = findedTodo.completed;
+      } else {
+        completed = req.body.completed;
+      }
+
+      const todo = await index.Todo.update(
+        { title: title, body: body, completed: completed },
+        { where: { id: parseId } },
+        { t }
+      );
+
+      await t.commit();
+      res.status(200).json(todo);
     } catch (err) {
+      await t.rollback();
       res.status(400).json({ message: err.message });
     }
   },

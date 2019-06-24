@@ -7,6 +7,8 @@ const index = require("../../../../db/models/index");
 const DummyTodo = require("../../../../helper/createHelper");
 const requestHelper = require("../../../../helper/requestHelper").request;
 
+const chalk = require("chalk");
+
 const getTodos = async () => {
   const response = await requestHelper({
     method: "get",
@@ -52,6 +54,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
 
     for (let i = 0; i < 5; i++) {
       const response = await updateTodo(400, invalidIdList[i], data);
+
       assert.strictEqual(
         response.body.message,
         "idに適切でない値が入っています、1以上の数字を入れてください"
