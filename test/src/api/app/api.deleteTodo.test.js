@@ -23,7 +23,7 @@ const deleteTodo = async (code, id) => {
   const response = await requestHelper({
     method: "delete",
     endPoint: `/api/todos/${id}`,
-    statusCode: 400,
+    statusCode: code,
   });
   return response;
 };
@@ -44,5 +44,18 @@ describe("TEST 「DELETE /api/todos/:id」", () => {
   });
   after(async () => {
     index.Todo.truncate();
+  });
+
+  it("idの引数に不正な値が入っていた場合、エラーが返る", async () => {
+    const invalidIdList = [0, -1, "0", undefined, null, {}, []];
+
+    invalidIdList.forEach(async id => {
+      const response = await deleteTodo(400, id);
+
+      assert.strictEqual(
+        response.body.message,
+        "idに適切でない値が入っています、1以上の数字を入れてください"
+      );
+    });
   });
 });
