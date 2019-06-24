@@ -7,16 +7,13 @@ const index = require("../../../../db/models/index");
 const DummyTodo = require("../../../../helper/createHelper");
 const requestHelper = require("../../../.././helper/requestHelper").request;
 
-// 記述終了後削除
-const chalk = require("chalk");
-
 const getTodos = async () => {
   const response = await requestHelper({
     method: "get",
     endPoint: "/api/todos",
     statusCode: 200,
   });
-  return response;
+  return response.body;
 };
 
 const deleteTodo = async (code, id) => {
@@ -43,7 +40,7 @@ describe("TEST 「DELETE /api/todos/:id」", () => {
     await Promise.all(promises);
   });
   after(async () => {
-    index.Todo.truncate();
+    await index.Todo.truncate();
   });
 
   it("idの引数に不正な値が入っていた場合、エラーが返る", async () => {
@@ -89,6 +86,6 @@ describe("TEST 「DELETE /api/todos/:id」", () => {
     const cuccentTodos = await getTodos();
 
     // idと合致したTodo一件はDBから削除される。
-    assert.strictEqual(oldTodos.length - 1, cuccentTodos);
+    assert.strictEqual(oldTodos.length - 1, cuccentTodos.length);
   });
 });
