@@ -61,45 +61,22 @@ module.exports = {
       ) {
         throw new Error("completedにはboolean型のみを入力してください");
       }
-      const findedTodo = await index.Todo.findOne({
+      const todo = await index.Todo.findOne({
         where: { id: parseId },
       });
-      if (!findedTodo) {
+      if (!todo) {
         throw new Error(
           `検索結果: ID:${parseId}に該当するTodoは見つかりませんでした`
         );
       }
 
-      let title;
-      let body;
-      let completed;
-
-      if (!req.body.title) {
-        title = findedTodo.title;
-      } else {
-        title = req.body.title;
+      for (let prop in req.body) {
+        if (prop) {
+          todo[prop] = req.body[prop];
+        }
       }
 
-      if (!req.body.body) {
-        body = findedTodo.body;
-      } else {
-        body = req.body.body;
-      }
-
-      if (!req.body.completed) {
-        completed = findedTodo.completed;
-      } else {
-        completed = req.body.completed;
-      }
-
-      await index.Todo.update(
-        { title: title, body: body, completed: completed },
-        { where: { id: parseId } },
-        { t }
-      );
-
-      const todo = await index.Todo.findOne({ where: { id: parseId } }, { t });
-
+      await todo.save({ t });
       await t.commit();
       res.status(200).json(todo);
     } catch (err) {
