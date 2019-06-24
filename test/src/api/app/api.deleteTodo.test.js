@@ -68,4 +68,27 @@ describe("TEST 「DELETE /api/todos/:id」", () => {
       `検索結果: ID:${invalidId}に該当するTodoは見つかりませんでした`
     );
   });
+  it("適切なidを渡した場合、idと合致したTodo一件が返ってくる。またそのTodoはDBから削除される", async () => {
+    const oldTodos = await getTodos();
+
+    const validId = 3;
+
+    const response = await deleteTodo(200, validId);
+    const todo = response.body;
+
+    //idと合致したTodo一件が返ってくる
+    assert.deepStrictEqual(todo, {
+      id: validId,
+      title: todo.title,
+      body: todo.body,
+      completed: todo.completed,
+      createdAt: todo.createdAt,
+      updatedAt: todo.updatedAt,
+    });
+
+    const cuccentTodos = await getTodos();
+
+    // idと合致したTodo一件はDBから削除される。
+    assert.strictEqual(oldTodos.length - 1, cuccentTodos);
+  });
 });
