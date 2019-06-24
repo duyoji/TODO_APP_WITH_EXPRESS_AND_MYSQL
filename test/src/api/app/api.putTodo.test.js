@@ -119,7 +119,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
@@ -158,7 +158,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
       done();
     }, 10);
@@ -196,7 +196,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
@@ -235,7 +235,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
@@ -274,7 +274,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
@@ -313,7 +313,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
@@ -339,7 +339,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
 
       assert.deepStrictEqual(todo, {
         id: validId,
-        title: todo.title,
+        title: data.title,
         body: data.body,
         completed: data.completed,
         createdAt: todo.createdAt,
@@ -355,7 +355,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         },
       });
 
-      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      // DBに格納されていたidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
 
       done();
