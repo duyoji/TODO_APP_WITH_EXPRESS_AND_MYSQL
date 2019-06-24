@@ -9,15 +9,6 @@ const requestHelper = require("../../../../helper/requestHelper").request;
 
 const chalk = require("chalk");
 
-const getTodos = async () => {
-  const response = await requestHelper({
-    method: "get",
-    endPoint: "/api/todos",
-    statusCode: 200,
-  });
-  return response;
-};
-
 const updateTodo = async (code, id, data) => {
   const response = await requestHelper({
     method: "put",
@@ -30,7 +21,7 @@ const updateTodo = async (code, id, data) => {
 describe("TEST 「PUT /api/todos/:id」", () => {
   before(async () => {
     const promises = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       const promise = index.Todo.create(
         new DummyTodo({
           title: `title ${i}`,
@@ -46,13 +37,13 @@ describe("TEST 「PUT /api/todos/:id」", () => {
   });
 
   it("idの引数に不正な値が入っていた場合、エラーが返る", async () => {
-    const invalidIdList = [0, -1, "0", undefined, null, [], {}];
+    const invalidIdList = [0, -1, "0", undefined, null, {}];
     const data = {
       title: "title",
       body: "body",
     };
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < invalidIdList.length; i++) {
       const response = await updateTodo(400, invalidIdList[i], data);
 
       assert.strictEqual(
@@ -60,14 +51,6 @@ describe("TEST 「PUT /api/todos/:id」", () => {
         "idに適切でない値が入っています、1以上の数字を入れてください"
       );
     }
-
-    // invalidIdList.forEach(async id => {
-    //   const response = await updateTodo(400, id, data);
-    //   assert.strictEqual(
-    //     response.body.message,
-    //     "idに適切でない値が入っています、1以上の数字を入れてください"
-    //   );
-    // });
   });
 
   it("idの引数と合致するTodoがない場合、エラーが返る", async () => {
@@ -88,7 +71,7 @@ describe("TEST 「PUT /api/todos/:id」", () => {
     const invalidCompletedList = [-1, 2, "0", null, [], {}];
     const id = 3;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < invalidCompletedList.length; i++) {
       const data = {
         title: "title",
         body: "body",
@@ -103,94 +86,70 @@ describe("TEST 「PUT /api/todos/:id」", () => {
     }
   });
 
-  it("適切にデータを送った場合、idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる、また配列内にあったidと紐つくTodoは変更されたTodoに上書きされる", async () => {
-    const validId = 3;
+  it("titleを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
 
-    const oldTodo = await index.Todo.findOne({
-      where: {
-        id: validId,
-      },
-    });
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
 
-    datas = [
-      { title: "update title" },
-      { body: "update body" },
-      { completed: true },
-      { title: "update title", body: "update body" },
-      { title: "update title", completed: true },
-      { body: "update body", completed: true },
-      { title: "update title", body: "update body", completed: true },
-    ];
+      const data = { title: "update title" };
 
-    for (let i = 0; i < 5; i++) {
-      const response = await updateTodo(200, validId, datas[i]);
+      const response = await updateTodo(200, validId, data);
       const todo = response.body;
 
       // idと合致したTodo一件のtitle、body、completed全て、またはいずれかが変更され返ってくる
-      if (datas[i].title && datas[i].body && datas[i].completed) {
-        assert.deepStrictEqual(todo, {
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: data.title,
+        body: todo.body,
+        completed: todo.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
           id: validId,
-          title: datas[i].title,
-          body: datas[i].body,
-          completed: datas[i].completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].title && datas[i].body) {
-        assert.deepStrictEqual(todo, {
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
+  });
+  it("bodyを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
           id: validId,
-          title: datas[i].title,
-          body: datas[i].body,
-          completed: todo.completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].title && datas[i].completed) {
-        assert.deepStrictEqual(todo, {
-          id: validId,
-          title: datas[i].title,
-          body: todo.body,
-          completed: datas[i].completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].body && datas[i].completed) {
-        assert.deepStrictEqual(todo, {
-          id: validId,
-          title: todo.title,
-          body: datas[i].body,
-          completed: datas[i].completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].title) {
-        assert.deepStrictEqual(todo, {
-          id: validId,
-          title: datas[i].title,
-          body: todo.body,
-          completed: todo.completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].body) {
-        assert.deepStrictEqual(todo, {
-          id: validId,
-          title: todo.title,
-          body: datas[i].body,
-          completed: todo.completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      } else if (datas[i].completed) {
-        assert.deepStrictEqual(todo, {
-          id: validId,
-          title: todo.title,
-          body: todo.body,
-          completed: datas[i].completed,
-          createdAt: todo.createdAt,
-          updatedAt: todo.updatedAt,
-        });
-      }
+        },
+      });
+
+      const data = { body: "update body" };
+
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: todo.title,
+        body: data.body,
+        completed: todo.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
 
       // 変更されたTodo１件のupdatedAtは更新されている
       assert.strictEqual(todo.updatedAt > todo.createdAt, true);
@@ -203,6 +162,205 @@ describe("TEST 「PUT /api/todos/:id」", () => {
 
       // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
       assert.notStrictEqual(oldTodo, currentTodo);
-    }
+      done();
+    }, 100);
+  });
+  it("completedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      const data = { completed: true };
+
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: todo.title,
+        body: todo.body,
+        completed: data.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
+  });
+  it("titleとbodyを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      const data = { title: "update title", body: "update body" };
+
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: data.title,
+        body: data.body,
+        completed: todo.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
+  });
+  it("titleとcompletedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      const data = { title: "update title", completed: true };
+
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: data.title,
+        body: todo.body,
+        completed: data.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
+  });
+  it("bodyとcompletedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      const data = { body: "update body", completed: true };
+
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: todo.title,
+        body: data.body,
+        completed: data.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
+  });
+  it("title、body、completedを更新した場合、データは適切に帰ってくる、また、DB内のデータも更新されている", done => {
+    setTimeout(async () => {
+      const validId = 3;
+
+      const oldTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      const data = {
+        title: "update title",
+        body: "update body",
+        completed: true,
+      };
+      const response = await updateTodo(200, validId, data);
+      const todo = response.body;
+
+      assert.deepStrictEqual(todo, {
+        id: validId,
+        title: todo.title,
+        body: data.body,
+        completed: data.completed,
+        createdAt: todo.createdAt,
+        updatedAt: todo.updatedAt,
+      });
+
+      // 変更されたTodo１件のupdatedAtは更新されている
+      assert.strictEqual(todo.updatedAt > todo.createdAt, true);
+
+      const currentTodo = await index.Todo.findOne({
+        where: {
+          id: validId,
+        },
+      });
+
+      // 配列内にあったidと紐つくTodoは変更されたTodoに上書きされる
+      assert.notStrictEqual(oldTodo, currentTodo);
+
+      done();
+    }, 100);
   });
 });
