@@ -1,5 +1,9 @@
 const index = require("../db/models/index");
 
+// chalkはコードの記述が終了次第消す
+// eslint-disable-next-line no-unused-vars
+const chalk = require("chalk");
+
 module.exports = {
   getTodos: async (req, res) => {
     try {
@@ -46,7 +50,7 @@ module.exports = {
     const t = await index.sequelize.transaction();
     try {
       const parseId = parseInt(req.params.id, 10);
-      if (typeof parseId !== "number" || parseId < 1) {
+      if (Number.isNaN(parseId) || parseId < 1) {
         throw new Error(
           "idに適切でない値が入っています、1以上の数字を入れてください"
         );
