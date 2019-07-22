@@ -1,8 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
+    "username": "atlansien",
+    "port": 3306,
+    "password": "atlansien",
+    "database": "atlansien",
     "host": "localhost",
     "dialect": "mysql"
   },
