@@ -1,5 +1,5 @@
 const requestHelper = require("supertest");
-const app = require("../server");
+const app = require("../../src/server");
 
 module.exports = {
   request: ({ method, endPoint, statusCode }) => {
