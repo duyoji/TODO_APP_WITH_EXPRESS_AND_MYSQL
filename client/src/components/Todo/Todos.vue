@@ -12,5 +12,11 @@ export default {
   components: {
     appTodo: Todo
   },
+  methods: {},
+  computed: {
+    todos() {
+      return this.$store.getters.todos;
+    }
+  }
 };
 </script>
