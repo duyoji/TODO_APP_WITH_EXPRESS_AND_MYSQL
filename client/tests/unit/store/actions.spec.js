@@ -1,7 +1,6 @@
 import actions from "@/store/actions";
 
 let url = "";
-let body = {};
 let mockError = false;
 
 jest.mock("axios", () => ({
