@@ -21,15 +21,13 @@ describe("TEST acitons.js", () => {
     const commit = jest.fn();
     await actions.fetchTodos({ commit });
 
-    expect(url).toBe();
-    expect(commit).toHaveBeenCalledWith(true);
+    expect(url).toBe("http://localhost:8040/api/todos");
+    expect(commit).toHaveBeenCalledWith("setTodos", true);
   });
   it("acitons.fetchTodosのエラー発生時テスト", async () => {
     mockError = true;
-    const commit = jest.fn();
 
-    await expect(
-      actions.fetchTodos({ commit }).toThrow("APIエラーが発生しました")
-    );
+		await expect(actions.fetchTodos({ commit: jest.fn() }, {}))
+    .rejects.toThrow("APIエラーが発生しました")
   });
 });
