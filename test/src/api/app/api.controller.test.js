@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const assert = require("power-assert");
-const controller = require("../../../../resources/api.controller");
+const controller = require("../../../../src/resources/api.controller");
 
 describe("api.controllerのテスト", () => {
   it("controller.getTodosはメソッドである", () => {
