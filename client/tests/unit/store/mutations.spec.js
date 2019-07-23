@@ -31,5 +31,7 @@ describe("TEST mutations.js", () => {
     }
 
     mutations.setTodos(state, todos);
+
+    expect(state.todos).toEqual(todos);
   });
 });
