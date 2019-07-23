@@ -26,7 +26,8 @@ describe("TEST acitons.js", () => {
   it("acitons.fetchTodosのエラー発生時テスト", async () => {
     mockError = true;
 
-		await expect(actions.fetchTodos({ commit: jest.fn() }, {}))
-    .rejects.toThrow("APIエラーが発生しました")
+    await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
+      "APIエラーが発生しました"
+    );
   });
 });
