@@ -12,12 +12,11 @@ export default {
   components: {
     appTodo: Todo
   },
-  methods: {
-  },
+  methods: {},
   computed: {
     todos() {
-      return this.$store.getters.todos
+      return this.$store.getters.todos;
     }
-  },
+  }
 };
 </script>
