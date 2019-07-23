@@ -24,4 +24,12 @@ describe("TEST acitons.js", () => {
     expect(url).toBe();
     expect(commit).toHaveBeenCalledWith(true);
   });
+  it("acitons.fetchTodosのエラー発生時テスト", async () => {
+    mockError = true;
+    const commit = jest.fn();
+
+    await expect(
+      actions.fetchTodos({ commit }).toThrow("APIエラーが発生しました")
+    );
+  });
 });
