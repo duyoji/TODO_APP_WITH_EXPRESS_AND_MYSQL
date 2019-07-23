@@ -11,3 +11,13 @@ jest.mock("axios", () => ({
     });
   }
 }));
+
+describe("TEST acitons.js", () => {
+  it("actions.fetchTodosは、DBからTodoデータを引き出し、mutations.setTodosに渡す", async () => {
+    const commit = jest.fn();
+    await actions.fetchTodos({ commit });
+
+    expect(url).toBe();
+    expect(commit).toHaveBeenCalledWith(true);
+  });
+});
