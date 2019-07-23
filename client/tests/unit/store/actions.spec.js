@@ -11,7 +11,7 @@ jest.mock("axios", () => ({
         throw Error();
       }
       url = _url;
-      resolve(true);
+      resolve({ data: true });
     });
   }
 }));
