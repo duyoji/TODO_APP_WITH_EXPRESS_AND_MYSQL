@@ -29,6 +29,6 @@ export default {
       isOpen: false,
       dummy: false
     };
-  },
+  }
 };
 </script>
