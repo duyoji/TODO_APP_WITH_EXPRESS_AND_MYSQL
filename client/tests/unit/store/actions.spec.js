@@ -1,6 +1,7 @@
 import actions from "@/store/actions";
 
 let url = "";
+let body = {};
 let mockError = false;
 
 jest.mock("axios", () => ({
@@ -13,24 +14,22 @@ jest.mock("axios", () => ({
       resolve({ data: true });
     });
   },
-  post: (_url, { title, body }) => {
+  post: (_url, _body) => {
     return new Promise(resolve => {
       if (mockError) {
         throw Error();
       }
       url = _url;
-      resolve({
-        title,
-        body
-      });
+      body = _body;
+      resolve({ data: true });
     });
   }
 }));
 
 describe("TEST acitons.js", () => {
   beforeEach(() => {
-    mockError =false
-  })
+    mockError = false;
+  });
   it("actions.fetchTodosは、DBからTodoデータを引き出し、mutations.setTodosに渡す", async () => {
     const commit = jest.fn();
     await actions.fetchTodos({ commit });
@@ -47,16 +46,14 @@ describe("TEST acitons.js", () => {
   });
   it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {
     const commit = jest.fn();
-    const title = "new Title";
-    const body = "new Body";
+    const newTitle = "new Title";
+    const newBody = "new Body";
 
-    await actions.postTodo({ commit }, { title, body });
+    await actions.postTodo({ commit }, { newTitle, newBody });
 
     expect(url).toBe("http://localhost:8040/api/todos");
-    expect(commit).toHaveBeenCalledWith("addTodo", {
-      title,
-      body
-    });
+    expect(body).toEqual({ title: newTitle, body: newBody, completed: false });
+    expect(commit).toHaveBeenCalledWith("addTodo", true);
   });
   it("actions.postTodoのエラー発生時テスト", async () => {
     mockError = true;
