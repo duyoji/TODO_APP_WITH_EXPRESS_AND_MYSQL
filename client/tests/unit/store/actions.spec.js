@@ -89,4 +89,11 @@ describe("TEST acitons.js", () => {
       { body: editData.editBody }
     );
   });
+  it("actions.putTodoのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(actions.putTodo({ commit: jest.fn() }, {})).toThrow(
+      "APIエラーが発生しました。"
+    );
+  });
 });
