@@ -27,7 +27,7 @@ jest.mock("axios", () => ({
 }));
 
 describe("TEST acitons.js", () => {
-  beforeEach(() => {
+  afterEach(() => {
     mockError = false;
   });
   it("actions.fetchTodosは、DBからTodoデータを引き出し、mutations.setTodosに渡す", async () => {
