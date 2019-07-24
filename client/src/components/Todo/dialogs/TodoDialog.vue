@@ -28,7 +28,7 @@
             v-if="isUpdate"
             color="info"
             outline
-            @click="dummy = !dummy"
+            @click="putTodoButton()"
             :disabled="!title || !body"
           >変更</v-btn>
         </v-layout>
@@ -58,7 +58,6 @@ export default {
       body: "",
       isOpen: false,
       isUpdate: false,
-      dummy: false,
       createdAt: moment(this.cleatedAt).format(
         "YYYY年 MM月 DD日(ddd), kk時mm分 "
       ),
