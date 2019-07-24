@@ -39,6 +39,7 @@
 
 <script>
 import moment from "moment";
+import { mapActions } from "vuex";
 export default {
   props: {
     todo: {
@@ -70,6 +71,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["putTodo"]),
     open() {
       this.isOpen = true;
     },
@@ -80,6 +82,17 @@ export default {
     },
     editorClose() {
       this.isUpdate = false;
+    },
+    putTodoButton() {
+      const editData = {
+        id: this.id,
+        title: this.title,
+        body: this.body
+      };
+      this.putTodo(editData);
+      this.title = "";
+      this.body = "";
+      this.editorClose()
     }
   }
 };
