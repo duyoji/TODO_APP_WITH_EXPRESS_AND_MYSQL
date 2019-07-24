@@ -18,10 +18,10 @@
             <v-text-field label="タイトルを入力してください" v-model="title"></v-text-field>
           </v-flex>
           <v-flex xs12 sm4 md5>
-            <v-text-field label="内容を入力してください" v-model="text"></v-text-field>
+            <v-text-field label="内容を入力してください" v-model="body"></v-text-field>
           </v-flex>
           <v-flex xs12 sm4 md2>
-            <v-btn outline align-center color="primary" dark @click="dummy = !dummy">送信</v-btn>
+            <v-btn outline align-center color="primary" dark @click="postTodoButton()">送信</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -30,15 +30,23 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       title: "",
-      text: "",
+      body: "",
       isError: false,
-      errorMsg: "",
-      dummy: false
+      errorMsg: ""
     };
   },
+  methods: {
+    ...mapActions(["postTodo"]),
+    postTodoButton() {
+      this.postTodo({ newTitle: this.title, newBody: this.body });
+      this.title = "";
+      this.body = "";
+    }
+  }
 };
 </script>
