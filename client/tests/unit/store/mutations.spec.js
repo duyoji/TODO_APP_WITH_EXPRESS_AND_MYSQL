@@ -52,7 +52,6 @@ describe("TEST mutations.js", () => {
     };
 
     mutations.updateTodo(state, editData);
-    
     expect(state.todos[0].id).toBe(editData.id);
     expect(state.todos[0].title).toBe(editData.title);
     expect(state.todos[0].body).toBe(editData.body);
