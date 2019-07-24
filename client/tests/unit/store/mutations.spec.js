@@ -48,7 +48,8 @@ describe("TEST mutations.js", () => {
       body: newTodo.body,
       completed: false,
       createdAt: state.todos[5],
-      updatedAt: state.todos[5]
+      updatedAt: state.todos[5],
     });
-  });
+
+  })
 });
