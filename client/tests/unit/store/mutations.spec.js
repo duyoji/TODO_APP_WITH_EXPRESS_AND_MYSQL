@@ -47,11 +47,11 @@ describe("TEST mutations.js", () => {
     const editData = {
       id: 1,
       title: "update title",
-      body: "update text"
+      body: "update text",
+      updatedAt: new Date()
     };
 
     mutations.updateTodo(state, editData);
-
 
     expect(state.todos[0]).toMatchObject(
       { id: editData.id },
