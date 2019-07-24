@@ -23,6 +23,16 @@ jest.mock("axios", () => ({
       body = _body;
       resolve({ data: true });
     });
+  },
+  put: (_url, _body) => {
+    return new Promise(resolve => {
+      if (mockError) {
+        throw Error();
+      }
+      url = _url;
+      body = _body;
+      resolve({ data: true });
+    });
   }
 }));
 
@@ -59,6 +69,27 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.postTodo({ commit: jest.fn() }, {})).rejects.toThrow(
+      "APIエラーが発生しました"
+    );
+  });
+  it("actions.putTodoは、渡されたidと合致するTodo一件のtitleとbodyを変更し、変更したTodoをmutations.updateTodoに渡す", async () => {
+    const commit = jest.fn();
+    const editData = {
+      id: 1,
+      title: "update Title",
+      body: "update Body"
+    };
+
+    await actions.putTodo({ commit }, editData);
+
+    expect(url).toBe(`http://localhost:8040/api/todos/${editData.id}`);
+    expect(body).toEqual({ title: editData.title, body: editData.body });
+    expect(commit).toHaveBeenCalledWith("updateTodo", true);
+  });
+  it("actions.putTodoのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(actions.putTodo({ commit: jest.fn() }, {})).rejects.toThrow(
       "APIエラーが発生しました"
     );
   });
