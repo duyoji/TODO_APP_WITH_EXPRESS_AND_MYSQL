@@ -44,4 +44,19 @@ describe("TEST mutations.js", () => {
 
     expect(state.todos[5]).toEqual(newTodo);
   });
+  it("updateTodoは、指定したIDの値と合致するTodo一件のtitleとbodyを変更する", () => {
+    const editData = {
+      id: 1,
+      title: "update title",
+      body: "update text"
+    };
+
+    mutations.updateTodo(state, editData);
+
+    expect(state.todos[0]).toMatchObject(
+      { id: editData.id },
+      { title: editData.title },
+      { body: editData.body }
+    );
+  });
 });
