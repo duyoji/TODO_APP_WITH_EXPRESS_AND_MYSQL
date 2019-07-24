@@ -24,5 +24,6 @@ export default {
     } catch (error) {
       throw new Error("APIエラーが発生しました");
     }
-  }
+  },
+  async putTodo({ commit }, editData) {}
 };
