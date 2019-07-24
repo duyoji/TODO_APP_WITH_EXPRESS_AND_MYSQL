@@ -12,6 +12,18 @@ jest.mock("axios", () => ({
       url = _url;
       resolve({ data: true });
     });
+  },
+  post: (_url, { title, body }) => {
+    return new Promise(resolve => {
+      if (mockError) {
+        throw Error();
+      }
+      url = _url;
+      resolve({
+        title,
+        body
+      });
+    });
   }
 }));
 
