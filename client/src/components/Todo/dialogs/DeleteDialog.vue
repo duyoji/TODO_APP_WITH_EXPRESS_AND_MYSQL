@@ -29,11 +29,6 @@ export default {
       isOpen: false,
       dummy: false
     };
-  },
-  methods: {
-    open() {
-      this.isOpen = true
-    }
-  },
+  }
 };
 </script>
