@@ -31,7 +31,6 @@ jest.mock("axios", () => ({
       }
       url = _url;
       body = _body;
-      console.log(_body);
       resolve({ data: true });
     });
   }
