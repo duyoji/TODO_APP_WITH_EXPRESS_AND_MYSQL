@@ -53,8 +53,8 @@ export default {
   },
   methods: {
     ...mapActions(["postTodo"]),
-    postTodoButton() {
-      this.postTodo({ newTitle: this.title, newBody: this.body });
+    async postTodoButton() {
+      await this.postTodo({ newTitle: this.title, newBody: this.body });
       this.title = "";
       this.body = "";
     }
