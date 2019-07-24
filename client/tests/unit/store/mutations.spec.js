@@ -34,4 +34,14 @@ describe("TEST mutations.js", () => {
 
     expect(state.todos).toEqual(todos);
   });
+  it("addTodoは、渡されたTodoデータをstate.todosの末尾に追加する", () => {
+    const newTodo = new Todo({
+      title: "new title",
+      body: "new body"
+    });
+
+    mutations.addTodo(state, newTodo);
+
+    expect(state.todos[5]).toEqual(newTodo);
+  });
 });
