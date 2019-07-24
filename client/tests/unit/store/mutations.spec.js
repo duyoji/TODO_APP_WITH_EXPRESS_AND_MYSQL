@@ -43,6 +43,5 @@ describe("TEST mutations.js", () => {
     mutations.addTodo(state, newTodo);
 
     expect(state.todos[5]).toEqual(newTodo);
-
-  })
+  });
 });

@@ -3,6 +3,6 @@ export default {
     state.todos = todos;
   },
   addTodo(state, todo) {
-    state.todos.push(todo)
+    state.todos.push(todo);
   }
 };
