@@ -30,4 +30,5 @@ describe("TEST acitons.js", () => {
       "APIエラーが発生しました"
     );
   });
+  it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {});
 });

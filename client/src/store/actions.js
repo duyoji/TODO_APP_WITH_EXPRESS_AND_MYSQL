@@ -11,5 +11,6 @@ export default {
     } catch (error) {
       throw new Error("APIエラーが発生しました");
     }
-  }
+  },
+  async postTodo({ commit }, { title, body }) {}
 };
