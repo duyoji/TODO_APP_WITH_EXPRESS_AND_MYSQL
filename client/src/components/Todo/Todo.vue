@@ -1,20 +1,16 @@
 <template>
   <div>
     <v-container xs12 sm6 md3>
-      <v-card hover class="card" width="200px" @click="dummy = !dummy">
+      <v-card hover class="card" width="200px" @click="showTodoDialog()">
         <v-layout justify-end class="closeBox">
-          <v-btn @click.stop="" class="closeBtn" fab small depressed flat>
+          <v-btn @click.stop class="closeBtn" fab small depressed flat>
             <v-icon>far fa-times-circle</v-icon>
           </v-btn>
         </v-layout>
 
         <v-layout align-center justify-center class="card-inside">
           <v-flex xs2 grow>
-            <v-checkbox
-              class="checkbox"
-              :value="todo.completed"
-              @click.stop=""
-            ></v-checkbox>
+            <v-checkbox class="checkbox" :value="todo.completed" @click.stop></v-checkbox>
           </v-flex>
           <v-flex>
             <v-list-tile-action>
@@ -53,6 +49,12 @@ export default {
   components: {
     appTodoDialog: TodoDialog,
     appDeleteDialog: DeleteDialog
+  },
+  methods: {
+    showTodoDialog() {
+      this.$refs.todoDialog.open();
+      this.selectedTodo = this.todo;
+    }
   }
 };
 </script>

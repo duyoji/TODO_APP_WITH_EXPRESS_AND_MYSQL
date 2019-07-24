@@ -9,11 +9,11 @@
       </v-card-actions>
 
       <v-divider></v-divider>
-      <v-card-text v-if="!isUpdate" class="modal-todo-text">{{ todo.text }}</v-card-text>
+      <v-card-text v-if="!isUpdate" class="modal-todo-text">{{ todo.body }}</v-card-text>
       <v-card-actions v-if="isUpdate">
         <v-text-field v-model="text" label="text" :rules="inputRule" required></v-text-field>
       </v-card-actions>
-      <v-card-text class="modal-todo-date">作成日: {{ todo.date }}</v-card-text>
+      <v-card-text class="modal-todo-date">作成日: {{ createdAt }}<br>更新日: {{ updatedAt }} </v-card-text>
       <v-spacer></v-spacer>
       <v-card-actions>
         <v-checkbox
@@ -39,13 +39,15 @@
 </template>
 
 <script>
+import moment from "moment"
 export default {
   props: {
     todo: {
       id: Number,
       title: String,
-      text: String,
-      date: String,
+      body: String,
+      cleatedAt: String,
+      updatedAt: String,
       completed: Boolean
     }
   },
@@ -56,12 +58,19 @@ export default {
       text: "",
       isOpen: false,
       isUpdate: false,
-      dummy: false
+      dummy: false,
+      createdAt: moment(this.cleatedAt).format("YYYY年 MM月 Do(ddd), kk時mm分 "),
+      updatedAt: moment(this.updatedAt).format("YYYY年 MM月 Do(ddd), kk時mm分 ")
     };
   },
   computed: {
     inputRule() {
       return [v => !!v || "必ず入力してください"];
+    }
+  },
+  methods: {
+    open() {
+      this.isOpen = true;
     }
   },
 };

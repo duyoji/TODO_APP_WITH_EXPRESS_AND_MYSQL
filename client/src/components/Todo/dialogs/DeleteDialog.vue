@@ -30,5 +30,10 @@ export default {
       dummy: false
     };
   },
+  methods: {
+    open() {
+      this.isOpen = true
+    }
+  },
 };
 </script>
