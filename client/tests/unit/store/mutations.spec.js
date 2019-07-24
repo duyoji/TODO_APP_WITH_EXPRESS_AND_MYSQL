@@ -1,5 +1,4 @@
 import mutations from "@/store/mutations";
-import moment from "moment";
 
 const state = {
   todos: []
@@ -13,8 +12,8 @@ class Todo {
     this.title = title;
     this.body = body;
     this.completed = false;
-    this.createdAt = moment().format("YYYY年 MM月 Do(ddd), kk時mm分 ");
-    this.updatedAt = moment().format("YYYY年 MM月 Do(ddd), kk時mm分 ");
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 }
 
@@ -48,7 +47,8 @@ describe("TEST mutations.js", () => {
     const editData = {
       id: 1,
       title: "update title",
-      body: "update text"
+      body: "update text",
+      updatedAt: new Date()
     };
 
     mutations.updateTodo(state, editData);
@@ -58,5 +58,6 @@ describe("TEST mutations.js", () => {
       { title: editData.title },
       { body: editData.body }
     );
+    expect(Math.max(state.todos[0].createdAt)).toBeLessThan(Math.max(state.todos[0].updatedAt))
   });
 });
