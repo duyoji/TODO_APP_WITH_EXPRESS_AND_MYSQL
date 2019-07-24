@@ -53,20 +53,21 @@ export default {
   },
   data() {
     return {
-      copiedTodo: this.todo,
       title: "",
       body: "",
       isOpen: false,
       isUpdate: false,
-      createdAt: moment(this.cleatedAt).format(
-        "YYYY年 MM月 DD日(ddd), kk時mm分 "
-      ),
-      updatedAt: moment(this.updatedAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ")
     };
   },
   computed: {
     inputRule() {
       return [v => !!v || "必ず入力してください"];
+    },
+    createdAt() {
+      return moment(this.todo.createdAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ");
+    },
+    updatedAt() {
+      return moment(this.todo.updatedAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ");
     }
   },
   methods: {
@@ -84,14 +85,14 @@ export default {
     },
     putTodoButton() {
       const editData = {
-        id: this.id,
+        id: this.todo.id,
         title: this.title,
         body: this.body
       };
       this.putTodo(editData);
       this.title = "";
       this.body = "";
-      this.editorClose()
+      this.editorClose();
     }
   }
 };
