@@ -11,7 +11,7 @@
       <v-divider></v-divider>
       <v-card-text v-if="!isUpdate" class="modal-todo-text">{{ todo.body }}</v-card-text>
       <v-card-actions v-if="isUpdate">
-        <v-text-field v-model="text" label="text" :rules="inputRule" required></v-text-field>
+        <v-text-field v-model="body" label="内容" :rules="inputRule" required></v-text-field>
       </v-card-actions>
       <v-card-text class="modal-todo-date">
         作成日: {{ createdAt }}
@@ -22,14 +22,14 @@
       <v-card-actions>
         <v-checkbox v-if="!isUpdate" class="modal-checkbox" :value="todo.completed" @click.stop></v-checkbox>
         <v-layout row wrap justify-end>
-          <v-btn v-if="!isUpdate" color="success" @click="dummy = !dummy" outline>編集</v-btn>
-          <v-btn v-if="isUpdate" color="error" @click="dummy = !dummy">キャンセル</v-btn>
+          <v-btn v-if="!isUpdate" color="success" @click="editorOpen()" outline>編集</v-btn>
+          <v-btn v-if="isUpdate" color="error" @click="editorClose()">キャンセル</v-btn>
           <v-btn
             v-if="isUpdate"
             color="info"
             outline
             @click="dummy = !dummy"
-            :disabled="!title || !text"
+            :disabled="!title || !body"
           >変更</v-btn>
         </v-layout>
       </v-card-actions>
@@ -54,7 +54,7 @@ export default {
     return {
       copiedTodo: this.todo,
       title: "",
-      text: "",
+      body: "",
       isOpen: false,
       isUpdate: false,
       dummy: false,
@@ -72,6 +72,14 @@ export default {
   methods: {
     open() {
       this.isOpen = true;
+    },
+    editorOpen() {
+      this.isUpdate = true;
+      this.title = this.todo.title;
+      this.body = this.todo.body;
+    },
+    editorClose() {
+      this.isUpdate = false;
     }
   }
 };
