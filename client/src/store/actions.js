@@ -33,6 +33,8 @@ export default {
       });
       const todoData = res.data;
       commit("updateTodo", todoData);
-    } catch (error) {}
+    } catch (error) {
+      throw new Error("APIエラーが発生しました");
+    }
   }
 };
