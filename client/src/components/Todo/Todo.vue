@@ -35,15 +35,15 @@ export default {
     todo: {
       id: Number,
       title: String,
-      text: String,
-      date: String,
+      body: String,
+      cleatedAt: String,
+      updatedAt: String,
       completed: Boolean
     }
   },
   data() {
     return {
-      selectedTodo: {},
-      dummy: false
+      selectedTodo: {}
     };
   },
   components: {
