@@ -42,5 +42,24 @@ describe("TEST acitons.js", () => {
       "APIエラーが発生しました"
     );
   });
-  it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {});
+  it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {
+    const commit = jest.fn();
+    const title = "new Title";
+    const body = "new Body";
+
+    await actions.postTodo({ commit }, { title, body });
+
+    expect(url).toBe("http://localhost:8040/api/todos");
+    expect(commit).toHaveBeenCalledWith("addTodo", {
+      title,
+      body
+    });
+  });
+  it("actions.postTodoのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(actions.postTodo({ commit: jest.fn() }, {})).rejects.toThrow(
+      "APIエラーが発生しました"
+    );
+  });
 });
