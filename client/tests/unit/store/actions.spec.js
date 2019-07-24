@@ -84,6 +84,7 @@ describe("TEST acitons.js", () => {
 
     expect(url).toBe(`http://localhost:8040/api/todos/${editData.id}`);
     expect(body).toEqual({ title: editData.title, body: editData.body });
+    expect(commit).toHaveBeenCalledWith("updateTodo", true);
   });
   it("actions.putTodoのエラー発生時テスト", async () => {
     mockError = true;
