@@ -59,9 +59,9 @@ export default {
       isUpdate: false,
       dummy: false,
       createdAt: moment(this.cleatedAt).format(
-        "YYYY年 MM月 Do(ddd), kk時mm分 "
+        "YYYY年 MM月 DD日(ddd), kk時mm分 "
       ),
-      updatedAt: moment(this.updatedAt).format("YYYY年 MM月 Do(ddd), kk時mm分 ")
+      updatedAt: moment(this.updatedAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ")
     };
   },
   computed: {
