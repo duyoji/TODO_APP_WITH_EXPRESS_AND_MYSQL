@@ -72,4 +72,21 @@ describe("TEST acitons.js", () => {
       "APIエラーが発生しました"
     );
   });
+  it("actions.putTodoは、渡されたidと合致するTodo一件のtitleとbodyを変更し、変更したTodoをmutations.updateTodoに渡す", async () => {
+    const commit = jest.fn();
+    const editData = {
+      id: 1,
+      editTitle: "update Title",
+      editBody: "update Body"
+    };
+
+    await actions.putTodo({ commit }, editData);
+
+    expect(url).toBe("http://localhost:8040/api/todos/1");
+    expect(body).toMatchObject(
+      { id: editData.id },
+      { title: editData.editTitle },
+      { body: editData.editBody }
+    );
+  });
 });
