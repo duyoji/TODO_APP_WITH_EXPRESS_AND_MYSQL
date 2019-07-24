@@ -16,10 +16,12 @@ export default {
     try {
       const res = await axios.post(API_URL, {
         title: title,
-        body: body
+        body: body,
+        completed: false
       });
+      console.log(res)
       const todoData = res.data;
-      commit("addTodos", todoData);
+      commit("addTodo", todoData);
     } catch (error) {
       throw new Error("APIエラーが発生しました");
     }

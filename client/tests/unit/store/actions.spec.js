@@ -28,6 +28,9 @@ jest.mock("axios", () => ({
 }));
 
 describe("TEST acitons.js", () => {
+  beforeEach(() => {
+    mockError =false
+  })
   it("actions.fetchTodosは、DBからTodoデータを引き出し、mutations.setTodosに渡す", async () => {
     const commit = jest.fn();
     await actions.fetchTodos({ commit });
