@@ -27,7 +27,6 @@ export default {
   },
   async putTodo({ commit }, editData) {
     try {
-      console.log(editData)
       const res = await axios.put(API_URL + `/${editData.id}`, {
         title: editData.title,
         body: editData.body
