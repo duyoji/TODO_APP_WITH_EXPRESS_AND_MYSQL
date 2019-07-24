@@ -31,6 +31,7 @@ jest.mock("axios", () => ({
       }
       url = _url;
       body = _body;
+      console.log(_body);
       resolve({ data: true });
     });
   }
@@ -76,18 +77,14 @@ describe("TEST acitons.js", () => {
     const commit = jest.fn();
     const editData = {
       id: 1,
-      editTitle: "update Title",
-      editBody: "update Body"
+      title: "update Title",
+      body: "update Body"
     };
 
     await actions.putTodo({ commit }, editData);
 
-    expect(url).toBe("http://localhost:8040/api/todos/1");
-    expect(body).toMatchObject(
-      { id: editData.id },
-      { title: editData.editTitle },
-      { body: editData.editBody }
-    );
+    expect(url).toBe(`http://localhost:8040/api/todos/${editData.id}`);
+    expect(body).toEqual({ title: editData.title, body: editData.body });
   });
   it("actions.putTodoのエラー発生時テスト", async () => {
     mockError = true;

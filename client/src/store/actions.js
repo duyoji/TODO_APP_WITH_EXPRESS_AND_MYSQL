@@ -25,5 +25,14 @@ export default {
       throw new Error("APIエラーが発生しました");
     }
   },
-  async putTodo({ commit }, editData) {}
+  async putTodo({ commit }, editData) {
+    try {
+      const res = await axios.put(API_URL + `/${editData.id}`, {
+        title: editData.editTitle,
+        body: editData.editBody
+      });
+      const todoData = res.data;
+      commit("updateTodo", todoData);
+    } catch (error) {}
+  }
 };
