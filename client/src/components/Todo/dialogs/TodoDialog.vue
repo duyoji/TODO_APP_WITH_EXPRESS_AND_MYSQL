@@ -22,8 +22,8 @@
       <v-card-actions>
         <v-checkbox v-if="!isUpdate" class="modal-checkbox" :value="todo.completed" @click.stop></v-checkbox>
         <v-layout row wrap justify-end>
-          <v-btn v-if="!isUpdate" color="success" @click="dummy = !dummy" outline>編集</v-btn>
-          <v-btn v-if="isUpdate" color="error" @click="dummy = !dummy">キャンセル</v-btn>
+          <v-btn v-if="!isUpdate" color="success" @click="editorOpen()" outline>編集</v-btn>
+          <v-btn v-if="isUpdate" color="error" @click="editorClose()">キャンセル</v-btn>
           <v-btn
             v-if="isUpdate"
             color="info"
@@ -72,6 +72,12 @@ export default {
   methods: {
     open() {
       this.isOpen = true;
+    },
+    editorOpen() {
+      this.isUpdate = true;
+    },
+    editorClose() {
+      this.isUpdate = false;
     }
   }
 };
