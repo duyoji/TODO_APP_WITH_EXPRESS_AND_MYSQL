@@ -102,4 +102,13 @@ describe("TEST acitons.js", () => {
       "Error"
     );
   });
+  it("actions.deleteTodoは、渡されたidと合致するTodo一件を削除し、渡されたidをmutations.deleteTodoに渡す", async () => {
+    const commit = jest.fn();
+    const deleteId = 1;
+
+    await actions.deleteTodo({ commit }, deleteId);
+
+    expect(url).toBe(`http://localhost:8040/api/todos/${deleteId}`);
+    expect(commit).toHaveBeenCalledWith("deleteTodo", 1);
+  });
 });
