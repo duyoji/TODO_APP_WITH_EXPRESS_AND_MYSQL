@@ -54,13 +54,13 @@ export default {
   methods: {
     ...mapActions(["postTodo"]),
     async postTodoButton() {
-      try{
-      await this.postTodo({ newTitle: this.title, newBody: this.body });
-      this.title = "";
-      this.body = "";
-      }catch (error){
+      try {
+        await this.postTodo({ newTitle: this.title, newBody: this.body });
+        this.title = "";
+        this.body = "";
+      } catch (error) {
         this.isError = true;
-        this.errorMsg = error.message
+        this.errorMsg = error.message;
       }
     }
   }
