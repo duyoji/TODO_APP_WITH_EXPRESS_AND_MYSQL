@@ -33,9 +33,19 @@ jest.mock("axios", () => ({
       body = _body;
       resolve({ data: true });
     });
+  },
+  delete: _url => {
+    return new Promise(resolve => {
+      if (mockError) {
+        throw new Error("Error");
+      }
+      url = _url;
+      resolve({ data: 1 });
+    });
   }
 }));
 
+// TODO:const commit =jest.fn()は一回一回作成せずに統一して使用できるので別ブランチでリファクタリング
 describe("TEST acitons.js", () => {
   afterEach(() => {
     mockError = false;
@@ -50,6 +60,7 @@ describe("TEST acitons.js", () => {
   it("acitons.fetchTodosのエラー発生時テスト", async () => {
     mockError = true;
 
+    // TODO:fetchTodosの第二引数で渡してる{}は不要なので別ブランチで削除
     await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
       "Error"
     );
@@ -90,6 +101,22 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.putTodo({ commit: jest.fn() }, {})).rejects.toThrow(
+      "Error"
+    );
+  });
+  it("actions.deleteTodoは、渡されたidと合致するTodo一件を削除し、渡されたidをmutations.deleteTodoに渡す", async () => {
+    const commit = jest.fn();
+    const deleteId = 1;
+
+    await actions.deleteTodo({ commit }, deleteId);
+
+    expect(url).toBe(`http://localhost:8040/api/todos/${deleteId}`);
+    expect(commit).toHaveBeenCalledWith("deleteTodo", 1);
+  });
+  it("actions.deleteTodoのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(actions.deleteTodo({ commit: jest.fn() })).rejects.toThrow(
       "Error"
     );
   });
