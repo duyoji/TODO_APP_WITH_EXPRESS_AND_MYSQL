@@ -19,9 +19,10 @@ export default {
     todo: {
       id: Number,
       title: String,
-      text: String,
-      date: String,
-      completed: Boolean
+      body: String,
+      completed: Boolean,
+      createdAt: String,
+      updatedAt: String
     }
   },
   data() {
@@ -30,6 +31,7 @@ export default {
       dummy: false
     };
   },
+
   methods: {
     open() {
       this.isOpen = true;
