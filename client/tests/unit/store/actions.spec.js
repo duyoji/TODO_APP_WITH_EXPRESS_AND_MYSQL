@@ -8,7 +8,7 @@ jest.mock("axios", () => ({
   get: _url => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error("Error");
+        throw new Error("Error");
       }
       url = _url;
       resolve({ data: true });
@@ -69,7 +69,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.postTodo({ commit: jest.fn() }, {})).rejects.toThrow(
-      "Error"
+      "Erorr"
     );
   });
   it("actions.putTodoは、渡されたidと合致するTodo一件のtitleとbodyを変更し、変更したTodoをmutations.updateTodoに渡す", async () => {
