@@ -6,7 +6,7 @@
       </v-card-title>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" @click="dummy = !dummy" flat>はい</v-btn>
+        <v-btn color="red" @click="deleteTodoButton()" flat>はい</v-btn>
         <v-btn color="gray" flat @click="close()">いいえ</v-btn>
       </v-card-actions>
     </v-card>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     todo: {
@@ -28,16 +29,20 @@ export default {
   data() {
     return {
       isOpen: false,
-      dummy: false
     };
   },
 
   methods: {
+    ...mapActions(["deleteTodo"]),
     open() {
       this.isOpen = true;
     },
     close() {
       this.isOpen = false;
+    },
+    deleteTodoButton() {
+      this.deleteTodo(this.todo.id);
+      this.close()
     }
   }
 };
