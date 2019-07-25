@@ -114,7 +114,7 @@ describe("TEST acitons.js", () => {
   it("actions.deleteTodoのエラー発生時テスト", async () => {
     mockError = true;
 
-    await expect(actions.deleteTodo({ commit: jest.fn() })).rejectss.toThrow(
+    await expect(actions.deleteTodo({ commit: jest.fn() })).rejects.toThrow(
       "Error"
     );
   });

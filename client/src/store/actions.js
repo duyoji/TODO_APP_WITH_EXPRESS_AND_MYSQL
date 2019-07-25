@@ -27,12 +27,21 @@ export default {
   },
   async putTodo({ commit }, editData) {
     try {
+      // 別ブランチででAPI_URLをdeleteTodoと同じ形に修正
       const res = await axios.put(API_URL + `/${editData.id}`, {
         title: editData.title,
         body: editData.body
       });
       const todoData = res.data;
       commit("updateTodo", todoData);
+    } catch (error) {
+      throw error;
+    }
+  },
+  async deleteTodo({ commit }, deleteId) {
+    try {
+      await axios.delete(`${API_URL}/${deleteId}`);
+      commit("deleteTodo", deleteId);
     } catch (error) {
       throw error;
     }
