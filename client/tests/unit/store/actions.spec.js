@@ -45,6 +45,7 @@ jest.mock("axios", () => ({
   }
 }));
 
+// TODO:const commit =jest.fn()は一回一回作成せずに統一して使用できるので別ブランチでリファクタリング
 describe("TEST acitons.js", () => {
   afterEach(() => {
     mockError = false;
@@ -59,6 +60,7 @@ describe("TEST acitons.js", () => {
   it("acitons.fetchTodosのエラー発生時テスト", async () => {
     mockError = true;
 
+    // TODO:fetchTodosの第二引数で渡してる{}は不要なので別ブランチで削除
     await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
       "Error"
     );
