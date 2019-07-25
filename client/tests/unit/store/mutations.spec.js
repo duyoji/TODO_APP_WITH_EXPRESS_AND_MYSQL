@@ -62,7 +62,7 @@ describe("TEST mutations.js", () => {
       Math.max(state.todos[0].updatedAt)
     );
   });
-  it("removeTodoは、指定したIDの値と合致するTodo１件を削除する", () => {
+  it("deleteTodoは、指定したIDの値と合致するTodo１件を削除する", () => {
     const oldTodos = state.todos.slice();
     const id = 1;
 
