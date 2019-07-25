@@ -54,9 +54,14 @@ export default {
   methods: {
     ...mapActions(["postTodo"]),
     async postTodoButton() {
+      try{
       await this.postTodo({ newTitle: this.title, newBody: this.body });
       this.title = "";
       this.body = "";
+      }catch (e){
+        isError = true;
+        errorMsg = "通信エラーが発生しました"
+      }
     }
   }
 };
