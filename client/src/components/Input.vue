@@ -25,7 +25,7 @@
               outline
               align-center
               color="primary"
-              :disabled="!title"
+              :disabled="!title || !body"
               @click="postTodoButton()"
             >送信</v-btn>
           </v-flex>
