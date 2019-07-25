@@ -37,6 +37,6 @@ export default {
     cloce() {
       this.isOpen = false;
     }
-  },
+  }
 };
 </script>
