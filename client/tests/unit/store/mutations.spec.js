@@ -58,6 +58,16 @@ describe("TEST mutations.js", () => {
       { title: editData.title },
       { body: editData.body }
     );
-    expect(Math.max(state.todos[0].createdAt)).toBeLessThan(Math.max(state.todos[0].updatedAt))
+    expect(Math.max(state.todos[0].createdAt)).toBeLessThan(
+      Math.max(state.todos[0].updatedAt)
+    );
+  });
+  it("removeTodoは、指定したIDの値と合致するTodo１件を削除する", () => {
+    const oldTodos = state.todos.slice();
+    const id = 1;
+
+    mutations.deleteTodo(state, id);
+
+    expect(state.todos[0]).not.toEqual(oldTodos[0]);
   });
 });
