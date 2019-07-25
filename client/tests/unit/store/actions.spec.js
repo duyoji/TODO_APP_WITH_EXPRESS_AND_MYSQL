@@ -111,4 +111,11 @@ describe("TEST acitons.js", () => {
     expect(url).toBe(`http://localhost:8040/api/todos/${deleteId}`);
     expect(commit).toHaveBeenCalledWith("deleteTodo", 1);
   });
+  it("actions.deleteTodoのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(actions.deleteTodo({ commit: jest.fn() })).rejectss.toThrow(
+      "Error"
+    );
+  });
 });
