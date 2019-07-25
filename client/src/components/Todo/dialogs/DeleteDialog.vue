@@ -1,6 +1,9 @@
 <template>
   <v-dialog v-model="isOpen" scrollable max-width="50%">
     <v-card>
+      <v-layout align-center>
+        <v-alert v-model="isError" color="error" icon="warning" outline dismissible>{{ errorMsg }}</v-alert>
+      </v-layout>
       <v-card-title>
         <strong>"{{ todo.title }}"</strong>を削除しますか？
       </v-card-title>
@@ -29,6 +32,8 @@ export default {
   data() {
     return {
       isOpen: false,
+      isError: false,
+      errorMsg: ""
     };
   },
 
@@ -45,7 +50,8 @@ export default {
         await this.deleteTodo(this.todo.id);
         this.close();
       } catch (error) {
-        throw error.message
+        this.isError = true;
+        this.errorMsg = error.message;
       }
     }
   }
