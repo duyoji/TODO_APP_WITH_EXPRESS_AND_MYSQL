@@ -9,7 +9,7 @@ export default {
       const todoData = res.data;
       commit("setTodos", todoData);
     } catch (error) {
-      throw new Error("APIエラーが発生しました");
+      throw new Error(error);
     }
   },
   async postTodo({ commit }, { newTitle, newBody }) {

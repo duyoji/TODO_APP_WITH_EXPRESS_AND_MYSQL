@@ -25,7 +25,7 @@
               outline
               align-center
               color="primary"
-              :disabled="!title || !body"
+              :disabled="!title"
               @click="postTodoButton()"
             >送信</v-btn>
           </v-flex>
@@ -60,7 +60,7 @@ export default {
       this.body = "";
       }catch (error){
         this.isError = true;
-        this.errorMsg = error
+        this.errorMsg = error.message
       }
     }
   }

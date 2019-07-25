@@ -51,7 +51,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
-      "APIエラーが発生しました"
+      "Error"
     );
   });
   it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {

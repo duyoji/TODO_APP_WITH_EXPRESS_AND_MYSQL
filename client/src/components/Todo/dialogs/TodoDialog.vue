@@ -105,7 +105,7 @@ export default {
         this.editorClose();
       } catch (error) {
         this.isError = true;
-        this.errorMsg = error;
+        this.errorMsg = error.message;
       }
     }
   }
