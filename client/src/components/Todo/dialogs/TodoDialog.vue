@@ -13,6 +13,9 @@
       <v-card-actions v-if="isUpdate">
         <v-text-field v-model="body" label="内容" :rules="inputRule" required></v-text-field>
       </v-card-actions>
+      <v-layout align-center>
+        <v-alert v-model="isError" color="error" icon="warning" outline dismissible>{{ errorMsg }}</v-alert>
+      </v-layout>
       <v-card-text class="modal-todo-date">
         作成日: {{ createdAt }}
         <br />
@@ -56,7 +59,9 @@ export default {
       title: "",
       body: "",
       isOpen: false,
-      isUpdate: false
+      isUpdate: false,
+      isError: false,
+      errorMsg: ""
     };
   },
   computed: {
@@ -88,15 +93,20 @@ export default {
       this.isUpdate = false;
     },
     async putTodoButton() {
-      const editData = {
-        id: this.todo.id,
-        title: this.title,
-        body: this.body
-      };
-      await this.putTodo(editData);
-      this.title = "";
-      this.body = "";
-      this.editorClose();
+      try {
+        const editData = {
+          id: this.todo.id,
+          title: this.title,
+          body: this.body
+        };
+        await this.putTodo(editData);
+        this.title = "";
+        this.body = "";
+        this.editorClose();
+      } catch (e) {
+        this.isError = true;
+        this.errorMsg = "通信エラーが発生しました";
+      }
     }
   }
 };

@@ -9,7 +9,8 @@ import getters from "./getters";
 
 export default new Vuex.Store({
   state: {
-    todos: []
+    todos: [],
+    code: 0
   },
   mutations,
   actions,

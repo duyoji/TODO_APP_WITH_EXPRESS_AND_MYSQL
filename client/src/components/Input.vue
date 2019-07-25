@@ -59,8 +59,8 @@ export default {
       this.title = "";
       this.body = "";
       }catch (e){
-        isError = true;
-        errorMsg = "通信エラーが発生しました"
+        this.isError = true;
+        this.errorMsg = "通信エラーが発生しました"
       }
     }
   }
