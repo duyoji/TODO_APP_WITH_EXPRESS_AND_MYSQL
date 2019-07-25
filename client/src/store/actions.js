@@ -27,7 +27,7 @@ export default {
   },
   async putTodo({ commit }, editData) {
     try {
-      // 別ブランチででAPI_URLをdeleteTodoと同じ形に修正
+      // TODO: 別ブランチででAPI_URLをdeleteTodoと同じ形に修正
       const res = await axios.put(API_URL + `/${editData.id}`, {
         title: editData.title,
         body: editData.body
