@@ -69,7 +69,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.postTodo({ commit: jest.fn() }, {})).rejects.toThrow(
-      "Erorr"
+      "Error"
     );
   });
   it("actions.putTodoは、渡されたidと合致するTodo一件のtitleとbodyを変更し、変更したTodoをmutations.updateTodoに渡す", async () => {
