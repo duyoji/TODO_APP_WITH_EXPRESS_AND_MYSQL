@@ -25,7 +25,7 @@
               outline
               align-center
               color="primary"
-              :disabled="!title || !body"
+              :disabled="!title"
               @click="postTodoButton()"
             >送信</v-btn>
           </v-flex>
@@ -58,9 +58,9 @@ export default {
       await this.postTodo({ newTitle: this.title, newBody: this.body });
       this.title = "";
       this.body = "";
-      }catch (e){
+      }catch (error){
         this.isError = true;
-        this.errorMsg = "通信エラーが発生しました"
+        this.errorMsg = error
       }
     }
   }

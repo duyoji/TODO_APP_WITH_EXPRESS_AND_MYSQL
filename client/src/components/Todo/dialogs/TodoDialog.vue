@@ -103,9 +103,9 @@ export default {
         this.title = "";
         this.body = "";
         this.editorClose();
-      } catch (e) {
+      } catch (error) {
         this.isError = true;
-        this.errorMsg = "通信エラーが発生しました";
+        this.errorMsg = error;
       }
     }
   }
