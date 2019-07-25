@@ -8,7 +8,7 @@ jest.mock("axios", () => ({
   get: _url => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw Error("Error");
       }
       url = _url;
       resolve({ data: true });
@@ -17,7 +17,7 @@ jest.mock("axios", () => ({
   post: (_url, _body) => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw new Error("Error");
       }
       url = _url;
       body = _body;
@@ -27,7 +27,7 @@ jest.mock("axios", () => ({
   put: (_url, _body) => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw new Error("Error");
       }
       url = _url;
       body = _body;

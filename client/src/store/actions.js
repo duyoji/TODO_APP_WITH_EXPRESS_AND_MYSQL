@@ -22,7 +22,7 @@ export default {
       const todoData = res.data;
       commit("addTodo", todoData);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   },
   async putTodo({ commit }, editData) {
