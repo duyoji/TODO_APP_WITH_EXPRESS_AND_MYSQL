@@ -9,7 +9,7 @@ export default {
       const todoData = res.data;
       commit("setTodos", todoData);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   },
   async postTodo({ commit }, { newTitle, newBody }) {

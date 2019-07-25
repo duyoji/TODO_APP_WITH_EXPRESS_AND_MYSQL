@@ -8,7 +8,13 @@ jest.mock("axios", () => ({
   get: _url => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        // テスト内で以下のように記述されていて、toThrowに引数として、"Error"という文字列を渡していたため、
+        // `throw new Error('Error'); ` のように'Error'という文字列(message)を含んだErrorオブジェクトをthrowした
+        //
+        // await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
+        //   "Error"
+        // );
+        throw new Error('Error');
       }
       url = _url;
       resolve({ data: true });
