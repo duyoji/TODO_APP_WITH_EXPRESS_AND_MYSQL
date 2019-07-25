@@ -10,5 +10,9 @@ export default {
     state.todos[updateIndex].title = editData.title;
     state.todos[updateIndex].body = editData.body;
     state.todos[updateIndex].updatedAt = editData.updatedAt;
+  },
+  deleteTodo(state, id) {
+    const deleteIndex = state.todos.findIndex(todo => id === todo.id);
+    state.todos.splice(deleteIndex, 1);
   }
 };
