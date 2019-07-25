@@ -70,4 +70,11 @@ describe("TEST mutations.js", () => {
 
     expect(state.todos[0]).not.toEqual(oldTodos[0]);
   });
+  it("switchCompletedは、指定したIDの値と合致するTodo１件のcompletedに入っている真偽値を反転する", () => {
+    const id = 2;
+
+    mutations.switchCompleted(state, id);
+
+    expect(state.todos[0].completed).toBe(true);
+  });
 });
