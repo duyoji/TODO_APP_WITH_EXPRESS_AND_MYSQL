@@ -3,7 +3,7 @@
     <v-container xs12 sm6 md3>
       <v-card hover class="card" width="200px" @click="showTodoDialog()">
         <v-layout justify-end class="closeBox">
-          <v-btn @click.stop class="closeBtn" fab small depressed flat>
+          <v-btn @click.stop="showDeleteDialog()" class="closeBtn" fab small depressed flat>
             <v-icon>far fa-times-circle</v-icon>
           </v-btn>
         </v-layout>
@@ -53,6 +53,10 @@ export default {
   methods: {
     showTodoDialog() {
       this.$refs.todoDialog.open();
+      this.selectedTodo = this.todo;
+    },
+    showDeleteDialog() {
+      this.$refs.deleteDialog.open();
       this.selectedTodo = this.todo;
     }
   }

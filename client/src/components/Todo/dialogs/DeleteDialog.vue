@@ -1,34 +1,59 @@
 <template>
   <v-dialog v-model="isOpen" scrollable max-width="50%">
     <v-card>
+      <v-layout align-center>
+        <v-alert v-model="isError" color="error" icon="warning" outline dismissible>{{ errorMsg }}</v-alert>
+      </v-layout>
       <v-card-title>
         <strong>"{{ todo.title }}"</strong>を削除しますか？
       </v-card-title>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" @click="dummy = !dummy" flat>はい</v-btn>
-        <v-btn color="gray" flat @click="dummy = !dummy">いいえ</v-btn>
+        <v-btn color="red" @click="deleteTodoButton()" flat>はい</v-btn>
+        <v-btn color="gray" flat @click="close()">いいえ</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     todo: {
       id: Number,
       title: String,
-      text: String,
-      date: String,
-      completed: Boolean
+      body: String,
+      completed: Boolean,
+      createdAt: String,
+      updatedAt: String
     }
   },
   data() {
     return {
       isOpen: false,
-      dummy: false
+      isError: false,
+      errorMsg: ""
     };
+  },
+
+  methods: {
+    ...mapActions(["deleteTodo"]),
+    open() {
+      this.isOpen = true;
+    },
+    close() {
+      this.isOpen = false;
+    },
+    async deleteTodoButton() {
+      try {
+        await this.deleteTodo(this.todo.id);
+        this.close();
+      } catch (error) {
+        this.isError = true;
+        this.errorMsg = error.message;
+      }
+    }
   }
 };
 </script>
