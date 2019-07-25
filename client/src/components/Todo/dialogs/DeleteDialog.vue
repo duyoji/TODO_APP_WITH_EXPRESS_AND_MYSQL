@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
+      isOpen: false
     };
   },
 
@@ -42,7 +42,7 @@ export default {
     },
     deleteTodoButton() {
       this.deleteTodo(this.todo.id);
-      this.close()
+      this.close();
     }
   }
 };
