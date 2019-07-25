@@ -13,6 +13,9 @@
       <v-card-actions v-if="isUpdate">
         <v-text-field v-model="body" label="内容" :rules="inputRule" required></v-text-field>
       </v-card-actions>
+      <v-layout align-center>
+        <v-alert v-model="isError" color="error" icon="warning" outline dismissible>{{ errorMsg }}</v-alert>
+      </v-layout>
       <v-card-text class="modal-todo-date">
         作成日: {{ createdAt }}
         <br />
@@ -57,6 +60,8 @@ export default {
       body: "",
       isOpen: false,
       isUpdate: false,
+      isError: false,
+      errorMsg: ""
     };
   },
   computed: {
@@ -64,10 +69,14 @@ export default {
       return [v => !!v || "必ず入力してください"];
     },
     createdAt() {
-      return moment(this.todo.createdAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ");
+      return moment(this.todo.createdAt).format(
+        "YYYY年 MM月 DD日(ddd), kk時mm分 "
+      );
     },
     updatedAt() {
-      return moment(this.todo.updatedAt).format("YYYY年 MM月 DD日(ddd), kk時mm分 ");
+      return moment(this.todo.updatedAt).format(
+        "YYYY年 MM月 DD日(ddd), kk時mm分 "
+      );
     }
   },
   methods: {
@@ -83,16 +92,21 @@ export default {
     editorClose() {
       this.isUpdate = false;
     },
-    putTodoButton() {
-      const editData = {
-        id: this.todo.id,
-        title: this.title,
-        body: this.body
-      };
-      this.putTodo(editData);
-      this.title = "";
-      this.body = "";
-      this.editorClose();
+    async putTodoButton() {
+      try {
+        const editData = {
+          id: this.todo.id,
+          title: this.title,
+          body: this.body
+        };
+        await this.putTodo(editData);
+        this.title = "";
+        this.body = "";
+        this.editorClose();
+      } catch (error) {
+        this.isError = true;
+        this.errorMsg = error.message;
+      }
     }
   }
 };

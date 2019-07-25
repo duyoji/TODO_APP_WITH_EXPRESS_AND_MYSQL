@@ -9,7 +9,7 @@ export default {
       const todoData = res.data;
       commit("setTodos", todoData);
     } catch (error) {
-      throw new Error("APIエラーが発生しました");
+      throw error;
     }
   },
   async postTodo({ commit }, { newTitle, newBody }) {
@@ -22,7 +22,7 @@ export default {
       const todoData = res.data;
       commit("addTodo", todoData);
     } catch (error) {
-      throw new Error("APIエラーが発生しました");
+      throw error;
     }
   },
   async putTodo({ commit }, editData) {
@@ -34,7 +34,7 @@ export default {
       const todoData = res.data;
       commit("updateTodo", todoData);
     } catch (error) {
-      throw new Error("APIエラーが発生しました");
+      throw error;
     }
   }
 };

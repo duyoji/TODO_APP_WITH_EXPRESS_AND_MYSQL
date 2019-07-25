@@ -53,10 +53,15 @@ export default {
   },
   methods: {
     ...mapActions(["postTodo"]),
-    postTodoButton() {
-      this.postTodo({ newTitle: this.title, newBody: this.body });
-      this.title = "";
-      this.body = "";
+    async postTodoButton() {
+      try {
+        await this.postTodo({ newTitle: this.title, newBody: this.body });
+        this.title = "";
+        this.body = "";
+      } catch (error) {
+        this.isError = true;
+        this.errorMsg = error.message;
+      }
     }
   }
 };

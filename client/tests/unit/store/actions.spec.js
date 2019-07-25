@@ -8,7 +8,7 @@ jest.mock("axios", () => ({
   get: _url => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw new Error("Error");
       }
       url = _url;
       resolve({ data: true });
@@ -17,7 +17,7 @@ jest.mock("axios", () => ({
   post: (_url, _body) => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw new Error("Error");
       }
       url = _url;
       body = _body;
@@ -27,7 +27,7 @@ jest.mock("axios", () => ({
   put: (_url, _body) => {
     return new Promise(resolve => {
       if (mockError) {
-        throw Error();
+        throw new Error("Error");
       }
       url = _url;
       body = _body;
@@ -51,7 +51,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.fetchTodos({ commit: jest.fn() }, {})).rejects.toThrow(
-      "APIエラーが発生しました"
+      "Error"
     );
   });
   it("actions.postTodoは、DBに新たなTodo１件を作成し、作成したTodoをmutations.addTodoに渡す", async () => {
@@ -69,7 +69,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.postTodo({ commit: jest.fn() }, {})).rejects.toThrow(
-      "APIエラーが発生しました"
+      "Error"
     );
   });
   it("actions.putTodoは、渡されたidと合致するTodo一件のtitleとbodyを変更し、変更したTodoをmutations.updateTodoに渡す", async () => {
@@ -90,7 +90,7 @@ describe("TEST acitons.js", () => {
     mockError = true;
 
     await expect(actions.putTodo({ commit: jest.fn() }, {})).rejects.toThrow(
-      "APIエラーが発生しました"
+      "Error"
     );
   });
 });
