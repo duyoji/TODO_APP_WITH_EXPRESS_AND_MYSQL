@@ -40,8 +40,6 @@ describe("TEST Input.vue", () => {
     postBtn.trigger("click");
     expect(actions.postTodo).toHaveBeenCalledWith(
       expect.anything(),
-      { newTitle: "newTitle", newBody: "newBody" },
-      undefined
-    );
+      { newTitle: "newTitle", newBody: "newBody" }, undefined);
   });
 });
