@@ -15,10 +15,14 @@
         </v-layout>
         <v-layout justify-center>
           <v-flex xs12 sm4 md5>
-            <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title"></v-text-field>
+            <!-- テストのため一時的にInputを使用 -->
+            <!-- <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title"></v-text-field>            <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title"></v-text-field> -->
+            <input label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title">
+
           </v-flex>
           <v-flex xs12 sm4 md5>
-            <v-text-field label="内容を入力してください" validate-on-blur :rules="inputRule" v-model="body"></v-text-field>
+            <!-- <v-text-field label="内容を入力してください" validate-on-blur :rules="inputRule" v-model="body"></v-text-field> -->
+            <input label="内容を入力してください" validate-on-blur :rules="inputRule" v-model="body" class="new-body">
           </v-flex>
           <v-flex xs12 sm4 md2>
             <v-btn

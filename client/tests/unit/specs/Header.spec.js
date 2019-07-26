@@ -23,7 +23,6 @@ describe("TEST Header.vue", () => {
     });
 
     const githubBtn = wrapper.find(".github-btn");
-		console.log(githubBtn)
 
     expect(githubBtn.exists()).toBe(true);
 
