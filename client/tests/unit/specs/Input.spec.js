@@ -21,17 +21,17 @@ const localVue = createLocalVue();
 localVue.use(Vuetify);
 localVue.use(Vuex);
 
+let actions;
+let store;
+
+actions = {
+  postTodo: jest.fn()
+};
+store = new Vuex.Store({
+  actions
+});
+
 describe("TEST Input.vue", () => {
-  let actions;
-  let store;
-  beforeEach(() => {
-    actions = {
-      postTodo: jest.fn()
-    };
-    store = new Vuex.Store({
-      actions
-    });
-  });
   it("タイトルと内容を入力して送信した時、actions.putTodoは成功する", () => {
     const wrapper = mount(Input, { store, localVue });
     wrapper.find(".new-title").setValue("newTitle");
