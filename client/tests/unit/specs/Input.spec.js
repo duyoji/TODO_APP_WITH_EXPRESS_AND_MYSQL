@@ -1,6 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Input from "@/components/Input.vue";
-import Vue from "vue"
+import Vue from "vue";
 import Vuetify from "vuetify";
 import Vuex from "vuex";
 
@@ -15,7 +15,7 @@ console.error = (...args) => {
   logError(...args);
 };
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
@@ -40,6 +40,8 @@ describe("TEST Input.vue", () => {
     postBtn.trigger("click");
     expect(actions.postTodo).toHaveBeenCalledWith(
       expect.anything(),
-      { newTitle: "newTitle", newBody: "newBody" }, undefined);
+      { newTitle: "newTitle", newBody: "newBody" },
+      undefined
+    );
   });
 });
