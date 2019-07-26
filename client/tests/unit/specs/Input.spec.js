@@ -32,7 +32,7 @@ describe("TEST Input.vue", () => {
       actions
     });
   });
-  it("タイトルと内容を入力した時、actions.putTodoは成功する", () => {
+  it("タイトルと内容を入力して送信した時、actions.putTodoは成功する", () => {
     const wrapper = mount(Input, { store, localVue });
     wrapper.find(".new-title").setValue("newTitle");
     wrapper.find(".new-body").setValue("newBody");
