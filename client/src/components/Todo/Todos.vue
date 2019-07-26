@@ -6,7 +6,12 @@
       </v-flex>
     </v-layout>
     <v-layout row wrap justify-center>
-      <app-todo v-for="todo in todos" :key="todo.id" :todo="todo"  @showError="showError($event, errorMsg)"/>
+      <app-todo
+        v-for="todo in todos"
+        :key="todo.id"
+        :todo="todo"
+        @showError="showError($event, errorMsg)"
+      />
     </v-layout>
   </div>
 </template>
@@ -17,16 +22,15 @@ export default {
   data() {
     return {
       isError: false,
-      errorMsg: "",
+      errorMsg: ""
     };
   },
   components: {
     appTodo: Todo
   },
   methods: {
-    showError(errorMsg){
-      this.isError = true,
-      this.errorMsg = errorMsg
+    showError(errorMsg) {
+      (this.isError = true), (this.errorMsg = errorMsg);
     }
   },
   computed: {
