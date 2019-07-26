@@ -74,7 +74,8 @@ export default {
         };
         await this.switchCompleted(switchData);
       } catch (error) {
-        throw error;
+        this.$parent.isError = true;
+        this.$parent.errorMsg = error;
       }
     }
   }
