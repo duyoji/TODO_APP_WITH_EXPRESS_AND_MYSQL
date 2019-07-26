@@ -5,10 +5,10 @@
         <span class="font-weight-light sub-title">using Vue.js</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn fab small depressed flat href="https://github.com/atlansien" target="_brank">
+      <v-btn fab small depressed flat href="https://github.com/atlansien" target="_brank" class="github-btn">
         <v-icon>fab fa-github</v-icon>
       </v-btn>
-      <v-btn fab small depressed flat href="https://twitter.com/proghallelujah" target="_brank">
+      <v-btn fab small depressed flat href="https://twitter.com/proghallelujah" target="_brank" class="twitter-btn">
         <v-icon>fab fa-twitter</v-icon>
       </v-btn>
       <v-btn
@@ -16,7 +16,7 @@
         small
         depressed
         flat
-        class="qiita"
+        class="qiita-btn"
         href="https://qiita.com/atlansien"
         target="_brank"
       >Q</v-btn>
@@ -27,7 +27,7 @@
   font-size: 12px;
 }
 
-.qiita {
+.qiita-btn {
   font-size: 20px;
   font-weight: bold;
 }
