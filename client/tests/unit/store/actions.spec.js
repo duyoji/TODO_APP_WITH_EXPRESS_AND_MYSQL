@@ -130,4 +130,11 @@ describe("TEST acitons.js", () => {
     expect(body).toHaveBeenCalledWith({ completed: true });
     expect(commit).toHaveBeenCalledWith("switchCompleted", 2);
   });
+  it("actions.switchCompletedのエラー発生時テスト", async () => {
+    mockError = true;
+
+    await expect(
+      actions.switchCompleted({ commit: jest.fn() })
+    ).rejects.toThrow("Error");
+  });
 });
