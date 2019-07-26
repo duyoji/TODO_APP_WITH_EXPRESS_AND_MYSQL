@@ -122,19 +122,22 @@ describe("TEST acitons.js", () => {
   });
   it("actions.switchCompletedは、渡されたidと合致するTodo一件のcompletedの真偽値を反転し、渡されたidをmutations.switchCompletedに渡す", async () => {
     const commit = jest.fn();
-    const switchId = 2;
+    const switchData = {
+      id: 1,
+      completed: true
+    };
 
-    await actions.switchCompleted({ commit }, switchId);
+    await actions.switchCompleted({ commit }, switchData);
 
-    expect(url).toBe(`http://localhost:8040/api/todos/${switchId}`);
-    expect(body).toHaveBeenCalledWith({ completed: true });
-    expect(commit).toHaveBeenCalledWith("switchCompleted", 2);
+    expect(url).toBe(`http://localhost:8040/api/todos/${switchData.id}`);
+    expect(body).toEqual({ completed: true });
+    expect(commit).toHaveBeenCalledWith("switchCompleted", 1);
   });
   it("actions.switchCompletedのエラー発生時テスト", async () => {
     mockError = true;
 
     await expect(
-      actions.switchCompleted({ commit: jest.fn() })
+      actions.switchCompleted({ commit: jest.fn() }, {})
     ).rejects.toThrow("Error");
   });
 });

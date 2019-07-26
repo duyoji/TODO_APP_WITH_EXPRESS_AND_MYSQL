@@ -45,5 +45,15 @@ export default {
     } catch (error) {
       throw error;
     }
+  },
+  async switchCompleted({ commit }, switchData) {
+    try {
+      await axios.put(`${API_URL}/${switchData.id}`, {
+        completed: switchData.completed
+      });
+      commit("switchCompleted", switchData.id);
+    } catch (error) {
+      throw error;
+    }
   }
 };
