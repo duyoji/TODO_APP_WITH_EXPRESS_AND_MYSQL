@@ -75,7 +75,7 @@ export default {
         await this.switchCompleted(switchData);
       } catch (error) {
         this.$parent.isError = true;
-        this.$parent.errorMsg = error;
+        this.$parent.errorMsg = error.message;
       }
     }
   }

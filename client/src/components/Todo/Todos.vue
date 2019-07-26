@@ -14,11 +14,11 @@
 <script>
 import Todo from "../../components/Todo/Todo.vue";
 export default {
-  data () {
+  data() {
     return {
       isError: false,
       errorMsg: ""
-    }
+    };
   },
   components: {
     appTodo: Todo

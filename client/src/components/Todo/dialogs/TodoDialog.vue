@@ -23,7 +23,12 @@
       </v-card-text>
       <v-spacer></v-spacer>
       <v-card-actions>
-        <v-checkbox v-if="!isUpdate" class="modal-checkbox" :value="todo.completed" @click.stop></v-checkbox>
+        <v-checkbox
+          v-if="!isUpdate"
+          class="modal-checkbox"
+          :value="todo.completed"
+          @click.stop="switchCompletedButton()"
+        ></v-checkbox>
         <v-layout row wrap justify-end>
           <v-btn v-if="!isUpdate" color="success" @click="editorOpen()" outline>編集</v-btn>
           <v-btn v-if="isUpdate" color="error" @click="editorClose()">キャンセル</v-btn>
@@ -80,7 +85,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["putTodo"]),
+    ...mapActions(["putTodo", "switchCompleted"]),
     open() {
       this.isOpen = true;
     },
@@ -103,6 +108,19 @@ export default {
         this.title = "";
         this.body = "";
         this.editorClose();
+      } catch (error) {
+        this.isError = true;
+        this.errorMsg = error.message;
+      }
+    },
+    async switchCompletedButton() {
+      try {
+        const invertedCompleted = !this.todo.completed;
+        const switchData = {
+          id: this.todo.id,
+          completed: invertedCompleted
+        };
+        await this.switchCompleted(switchData);
       } catch (error) {
         this.isError = true;
         this.errorMsg = error.message;
