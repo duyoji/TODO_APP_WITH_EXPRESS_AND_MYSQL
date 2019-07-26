@@ -16,31 +16,30 @@
         <v-layout justify-center>
           <v-flex xs12 sm4 md5>
             <!-- テストのため一時的にinputを使用 -->
-            <!-- <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title"></v-text-field>            <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title"></v-text-field> -->
-            <input
+            <v-text-field label="タイトルを入力してください" validate-on-blur :rules="inputRule" v-model="title" class="new-title" data-test="zipCodeText1"></v-text-field>
+            <!-- <input
               label="タイトルを入力してください"
               validate-on-blur
               :rules="inputRule"
               v-model="title"
               class="new-title"
-            />
+            /> -->
           </v-flex>
           <v-flex xs12 sm4 md5>
-            <!-- <v-text-field label="内容を入力してください" validate-on-blur :rules="inputRule" v-model="body"></v-text-field> -->
-            <input
+            <v-text-field label="内容を入力してください" validate-on-blur :rules="inputRule" v-model="body" data-test="zipCodeText2"></v-text-field>
+            <!-- <input
               label="内容を入力してください"
               validate-on-blur
               :rules="inputRule"
               v-model="body"
               class="new-body"
-            />
+            /> -->
           </v-flex>
           <v-flex xs12 sm4 md2>
             <v-btn
               outline
               align-center
               color="primary"
-              :disabled="!title || !body"
               @click="postTodoButton()"
             >送信</v-btn>
           </v-flex>
