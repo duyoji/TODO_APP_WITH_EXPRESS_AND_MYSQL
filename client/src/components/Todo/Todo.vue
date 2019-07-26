@@ -10,7 +10,11 @@
 
         <v-layout align-center justify-center class="card-inside">
           <v-flex xs2 grow>
-            <v-checkbox class="checkbox" :value="todo.completed" @click.stop></v-checkbox>
+            <v-checkbox
+              class="checkbox"
+              :value="todo.completed"
+              @click.stop="switchCompletedButton()"
+            ></v-checkbox>
           </v-flex>
           <v-flex>
             <v-list-tile-action>
@@ -30,6 +34,7 @@
 <script>
 import TodoDialog from "./dialogs/TodoDialog.vue";
 import DeleteDialog from "./dialogs/DeleteDialog.vue";
+import { mapActions } from "vuex";
 export default {
   props: {
     todo: {
@@ -51,6 +56,7 @@ export default {
     appDeleteDialog: DeleteDialog
   },
   methods: {
+    ...mapActions(["switchCompleted"]),
     showTodoDialog() {
       this.$refs.todoDialog.open();
       this.selectedTodo = this.todo;
@@ -58,6 +64,18 @@ export default {
     showDeleteDialog() {
       this.$refs.deleteDialog.open();
       this.selectedTodo = this.todo;
+    },
+    async switchCompletedButton() {
+      try {
+        const invertedCompleted = !this.todo.completed;
+        const switchData = {
+          id: this.todo.id,
+          completed: invertedCompleted
+        };
+        await this.switchCompleted(switchData);
+      } catch (error) {
+        throw error;
+      }
     }
   }
 };
