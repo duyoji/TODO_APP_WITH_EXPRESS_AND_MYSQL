@@ -26,7 +26,7 @@
               outline
               align-center
               color="primary"
-              :disabled="isDisabledButton"
+              :disabled="!title || !body"
               @click="postTodoButton()"
             >送信</v-btn>
           </v-flex>
@@ -50,9 +50,6 @@ export default {
   computed: {
     inputRule() {
       return [v => !!v || "必ず入力してください"];
-    },
-    isDisabledButton() {
-      return !this.title || !this.body;
     }
   },
   methods: {
