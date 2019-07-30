@@ -26,7 +26,6 @@
               outline
               align-center
               color="primary"
-              data-test="zipCodeText3"
               :disabled="isDisabledButton"
               @click="postTodoButton()"
             >送信</v-btn>
