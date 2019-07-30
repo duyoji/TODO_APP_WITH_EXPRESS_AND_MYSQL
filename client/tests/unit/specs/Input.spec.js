@@ -32,16 +32,23 @@ store = new Vuex.Store({
 });
 
 describe("TEST Input.vue", () => {
-  it("タイトルと内容を入力して送信した時、actions.putTodoは成功する", () => {
+  it("タイトルと内容を入力して送信した時、actions.putTodoは成功する", (done) => {
     const wrapper = mount(Input, { store, localVue });
-    wrapper.find(".new-title").setValue("newTitle");
-    wrapper.find(".new-body").setValue("newBody");
+    wrapper.find('[data-test="zipCodeText1"]').setValue("newTitle");
+    wrapper.find('[data-test="zipCodeText2"]').setValue("newBody");
     const postBtn = wrapper.find(".v-btn");
-    postBtn.trigger("click");
-    expect(actions.postTodo).toHaveBeenCalledWith(
-      expect.anything(),
-      { newTitle: "newTitle", newBody: "newBody" },
-      undefined
-    );
+
+    // `setValue` のタイミングが非同期だからか、すｇにpostBtn.trigger('click')をすると
+    // `isDisabledButton` はtrueになるが、setTimeoutでタイミングを少しずらすことで、
+    // `isDisabledButton` はfalseになり、disabledがあっても意図通りの挙動が確認できるようになった
+    setTimeout(() => {
+      postBtn.trigger("click");
+      expect(actions.postTodo).toHaveBeenCalledWith(
+        expect.anything(),
+        { newTitle: "newTitle", newBody: "newBody" },
+        undefined
+      );
+      done();
+    }, 0);
   });
 });
