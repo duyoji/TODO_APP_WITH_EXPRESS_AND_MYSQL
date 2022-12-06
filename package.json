@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/atlansien/TODO_APP_WITH_EXPRESS_AND_MYSQL#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.10",
     "sequelize-cli": "^5.5.0"
