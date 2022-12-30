@@ -33,7 +33,7 @@
     "eslint-plugin-vue": "^5.2.3",
     "husky": "^2.4.1",
     "lint-staged": "^8.2.1",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "power-assert": "^1.6.1",
